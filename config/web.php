@@ -6,17 +6,19 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language'=>'es',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'O1-G3zW3pKbMhgBAVlkXSnp-aOlgcO_b',
+            'cookieValidationKey' => 'Xy06aDF64i9bYP8oFuQH9xRkLgMmHncv',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Usuario',
             'enableAutoLogin' => true,
+            'loginUrl' => ['usuario/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -38,29 +40,28 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
         ],
-        */
+        'formatter' => [
+            'dateFormat' => 'dd.MM.yyyy',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => ' ',
+            'currencyCode' => 'EUR',
+       ],
     ],
     'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-    ];
+    #$config['bootstrap'][] = 'debug';
+    #$config['modules']['debug'] = 'yii\debug\Module';
 
     $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-    ];
+    $config['modules']['gii'] = 'yii\gii\Module';
 }
 
 return $config;

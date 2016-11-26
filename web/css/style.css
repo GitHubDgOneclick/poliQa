@@ -1,0 +1,17 @@
+.bg-op{
+	background-color: #ffffff;
+	opacity: .9;
+}
+.bg-login{
+	background: url('../img/fondo.jpg');
+	background-size: cover;
+}
+.margin-top-15{
+	margin-top: 15px;
+}
+.padding-15{
+	padding: 15px;
+}
+.page-header{
+	margin: 10px 0 15px;
+}
