@@ -25,9 +25,18 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
         ),
+        'v' => 
+        array (
+            'vova07\\imperavi\\' => 16,
+        ),
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'k' => 
+        array (
+            'kartik\\date\\' => 12,
+            'kartik\\base\\' => 12,
         ),
         'c' => 
         array (
@@ -62,6 +71,10 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
         array (
             'Faker\\' => 6,
         ),
+        'E' => 
+        array (
+            'Edvlerblog\\' => 11,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -71,6 +84,10 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
         array (
             'Codeception\\Extension\\' => 22,
             'Codeception\\' => 12,
+        ),
+        'A' => 
+        array (
+            'Adldap\\' => 7,
         ),
     );
 
@@ -103,11 +120,23 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
+        'vova07\\imperavi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vova07/yii2-imperavi-widget/src',
+        ),
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'kartik\\date\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-datepicker',
+        ),
+        'kartik\\base\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base',
         ),
         'cebe\\markdown\\' => 
         array (
@@ -169,6 +198,10 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
+        'Edvlerblog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/edvlerblog/yii2-adldap-module/src',
+        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -184,6 +217,10 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
         'Codeception\\' => 
         array (
             0 => __DIR__ . '/..' . '/codeception/base/src/Codeception',
+        ),
+        'Adldap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/adldap2/adldap2/src',
         ),
     );
 
@@ -204,6 +241,10 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
         ),
         'D' => 
         array (
+            'Doctrine\\Common\\Collections\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/collections/lib',
+            ),
             'Diff' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/php-diff/lib',
