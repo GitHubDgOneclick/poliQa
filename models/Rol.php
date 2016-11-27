@@ -19,8 +19,8 @@ class Rol extends \yii\db\ActiveRecord
     const ESTADO_ACTIVO = 1;
     const ESTADO_INACTIVO = 0;
     const ROL_ADMINISTRADOR = 1;
-    const ROL_EDITOR = 0;
-    const ROL_USUARIO = 1;
+    const ROL_EDITOR = 2;
+    const ROL_USUARIO = 3;
     /**
      * @inheritdoc
      */
