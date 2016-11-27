@@ -14,18 +14,12 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-
-    <?= $form->field($model, 'codigo') ?>
-
-    <?= $form->field($model, 'nombre') ?>
-
-    <?= $form->field($model, 'estado') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
-    </div>
-
+        <?= $form->field($model, 'nombre')->textInput(['placeholder' => "nombre"])->label(false) ?>
+        <?= $form->field($model, 'estado')->dropDownList([1=>'Activo',0=>'No Activo'],['prompt'=>'Seleccione un rol'])->label(false) ?>
+        <div class="form-group">
+            <?= Html::submitButton('<i class="glyphicon glyphicon-search"></i> Filtrar', ['class' => 'btn btn-info']) ?>
+            <?= Html::resetButton('<i class="fa fa-paint-brush" aria-hidden="true"></i> limpiar Filtros', ['class' => 'btn btn-danger', 'onclick'=>' limiparFiltros( this ) ' ]) ?>
+        </div>
     <?php ActiveForm::end(); ?>
 
 </div>

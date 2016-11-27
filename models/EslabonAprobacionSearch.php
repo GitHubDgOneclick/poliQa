@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Usuario;
+use app\models\EslabonAprobacion;
 
 /**
- * UsuarioSearch represents the model behind the search form about `app\models\Usuario`.
+ * EslabonAprobacionSearch represents the model behind the search form about `app\models\EslabonAprobacion`.
  */
-class UsuarioSearch extends Usuario
+class EslabonAprobacionSearch extends EslabonAprobacion
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class UsuarioSearch extends Usuario
     public function rules()
     {
         return [
-            [['codigo', 'rol'], 'integer'],
-            [['nombre', 'apellido', 'email', 'usuario', 'contrasena'], 'safe'],
+            [['codigo', 'cadena_aprobacion', 'usuario'], 'integer'],
+            [['nombre'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class UsuarioSearch extends Usuario
      */
     public function search($params)
     {
-        $query = Usuario::find();
+        $query = EslabonAprobacion::find();
 
         // add conditions that should always apply here
 
@@ -60,22 +60,12 @@ class UsuarioSearch extends Usuario
         // grid filtering conditions
         $query->andFilterWhere([
             'codigo' => $this->codigo,
-            'rol' => $this->rol,
+            'cadena_aprobacion' => $this->cadena_aprobacion,
+            'usuario' => $this->usuario,
         ]);
 
-        $query->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'apellido', $this->apellido])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'usuario', $this->usuario])
-            ->andFilterWhere(['like', 'contrasena', $this->contrasena])
-            ->andWhere( [ 'not', [ 'codigo' => Yii::$app->user->identity->codigo ] ] );
+        $query->andFilterWhere(['like', 'nombre', $this->nombre]);
 
         return $dataProvider;
     }
-
-    public static function allEditors()
-    {
-        return Usuario::find()->where([ 'rol' => Rol::ROL_EDITOR ])->andWhere( ['NOT IN', 'codigo', [ Yii::$app->user->identity->codigo ] ] )->all();
-    }
-
 }

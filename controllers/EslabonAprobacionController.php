@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\CadenaAprobacion;
-use app\models\CadenaAprobacionSearch;
+use app\models\EslabonAprobacion;
+use app\models\EslabonAprobacionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CadenaAprobacionController implements the CRUD actions for CadenaAprobacion model.
+ * EslabonAprobacionController implements the CRUD actions for EslabonAprobacion model.
  */
-class CadenaAprobacionController extends Controller
+class EslabonAprobacionController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,14 +30,16 @@ class CadenaAprobacionController extends Controller
     }
 
     /**
-     * Lists all CadenaAprobacion models.
+     * Lists all EslabonAprobacion models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex( $cadena )
     {
-        $searchModel = new CadenaAprobacionSearch();
+        $searchModel = new EslabonAprobacionSearch();
+        $searchModel->cadena_aprobacion = $cadena;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $model = new CadenaAprobacion();
+        $model = new EslabonAprobacion();
+        $model->cadena_aprobacion = $cadena;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -46,7 +48,7 @@ class CadenaAprobacionController extends Controller
     }
 
     /**
-     * Displays a single CadenaAprobacion model.
+     * Displays a single EslabonAprobacion model.
      * @param integer $id
      * @return mixed
      */
@@ -58,25 +60,23 @@ class CadenaAprobacionController extends Controller
     }
 
     /**
-     * Creates a new CadenaAprobacion model.
+     * Creates a new EslabonAprobacion model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new CadenaAprobacion();
+        $model = new EslabonAprobacion();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['eslabon-aprobacion/index', 'cadena' => $model->codigo]);
+            return $this->redirect(['index', 'cadena' => $model->cadena_aprobacion]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->redirect(['index', 'cadena' => $model->cadena_aprobacion]);
         }
     }
 
     /**
-     * Updates an existing CadenaAprobacion model.
+     * Updates an existing EslabonAprobacion model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -95,7 +95,7 @@ class CadenaAprobacionController extends Controller
     }
 
     /**
-     * Deletes an existing CadenaAprobacion model.
+     * Deletes an existing EslabonAprobacion model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -108,15 +108,15 @@ class CadenaAprobacionController extends Controller
     }
 
     /**
-     * Finds the CadenaAprobacion model based on its primary key value.
+     * Finds the EslabonAprobacion model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return CadenaAprobacion the loaded model
+     * @return EslabonAprobacion the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = CadenaAprobacion::findOne($id)) !== null) {
+        if (($model = EslabonAprobacion::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

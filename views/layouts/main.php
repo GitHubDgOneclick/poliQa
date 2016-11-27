@@ -49,7 +49,7 @@ AppAsset::register($this);
                                     'items' => [
                                         '<li><a href="'.Yii::$app->urlManager->createUrl([ '/usuario/view' , 'id' => Yii::$app->user->identity->codigo  ]).'"><i class="fa fa-user-o" aria-hidden="true"></i> Ver Perfil</a></li>',
                                         '<li><a href="'.Yii::$app->urlManager->createUrl(['/usuario/index']).'"><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a></li>',
-                                        '<li><a href="'.Yii::$app->urlManager->createUrl(['/']).'"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cheks de Aprobacion</a></li>',
+                                        '<li><a href="'.Yii::$app->urlManager->createUrl(['/cadena-aprobacion']).'"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cheks de Aprobacion</a></li>',
                                         '<li role="separator" class="divider"></li>',
                                         '<li><a href="'.Yii::$app->urlManager->createUrl(['usuario/logout']).'"><i class="fa fa-reply" aria-hidden="true"></i> Cerrar sesion</a></li>',
                                     ],'options' => [

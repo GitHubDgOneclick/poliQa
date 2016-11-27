@@ -17,10 +17,10 @@ use app\models\Rol;
         'method' => 'get',
     ]); ?>
 
-        <?= $form->field($model, 'nombre')->input('nombre', ['placeholder' => "nombre"])->label(false) ?>
-        <?= $form->field($model, 'apellido')->input('apellido', ['placeholder' => "apellido"])->label(false) ?>
-        <?= $form->field($model, 'email')->input('email', ['placeholder' => "email"])->label(false) ?>
-        <?= $form->field($model, 'usuario')->input('usuario', ['placeholder' => "nombre de usuario"])->label(false) ?>
+        <?= $form->field($model, 'nombre')->textInput(['placeholder' => "nombre"])->label(false) ?>
+        <?= $form->field($model, 'apellido')->textInput(['placeholder' => "apellido"])->label(false) ?>
+        <?= $form->field($model, 'email')->textInput(['placeholder' => "email"])->label(false) ?>
+        <?= $form->field($model, 'usuario')->textInput(['placeholder' => "nombre de usuario"])->label(false) ?>
         <?= $form->field($model, 'rol')->dropDownList(ArrayHelper::map(Rol::all(), 'codigo', 'nombre'),['prompt'=>'Seleccione un rol'])->label(false) ?>
 
     <div class="form-group">
