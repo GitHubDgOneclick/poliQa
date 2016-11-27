@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\bootstrap\Dropdown;
 
 AppAsset::register($this);
 ?>
@@ -24,7 +25,7 @@ AppAsset::register($this);
     <body class="bg-login">
         <?php $this->beginBody() ?>
         <div class="container">
-            <div class="row bg-op">
+            <div class="row bg-op row-nav">
                 <?php
                 NavBar::begin([
                     'brandLabel' => 'PoliQa',
@@ -36,18 +37,26 @@ AppAsset::register($this);
                 echo Nav::widget([
                     'options' => ['class' => 'navbar-nav navbar-right'],
                     'items' => [
-                        ['label' => 'Home', 'url' => ['/site/index']],
+                        ['label' => 'preguntas', 'url' => ['/entrada/']],
                         Yii::$app->user->isGuest ? (
                             ['label' => 'Login', 'url' => ['/usuario/login']]
                         ) : (
-                            '<li>'
-                            . Html::beginForm(['/site/logout'], 'post')
-                            . Html::submitButton(
-                                'Logout (' . Yii::$app->user->identity->getNombre() . ')',
-                                ['class' => 'btn btn-link logout']
-                            )
-                            . Html::endForm()
-                            . '</li>'
+                            '<li class="dropdown">'.
+                                '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">'.
+                                   Yii::$app->user->identity->getNombre() . '('. Yii::$app->user->identity->rol0->nombre .') <span class="caret"></span>'.
+                                '</a>'.
+                                Dropdown::widget([
+                                    'items' => [
+                                        '<li><a href="'.Yii::$app->urlManager->createUrl([ '/usuario/view' , 'id' => Yii::$app->user->identity->codigo  ]).'"><i class="fa fa-user-o" aria-hidden="true"></i> Ver Perfil</a></li>',
+                                        '<li><a href="'.Yii::$app->urlManager->createUrl(['/usuario/index']).'"><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a></li>',
+                                        '<li><a href="'.Yii::$app->urlManager->createUrl(['/']).'"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cheks de Aprobacion</a></li>',
+                                        '<li role="separator" class="divider"></li>',
+                                        '<li><a href="'.Yii::$app->urlManager->createUrl(['usuario/logout']).'"><i class="fa fa-reply" aria-hidden="true"></i> Cerrar sesion</a></li>',
+                                    ],'options' => [
+                                        'class' => 'dropdown-menu',
+                                    ]
+                                ]).
+                            '</li>'
                         )
                     ],
                 ]);

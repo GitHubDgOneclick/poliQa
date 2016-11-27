@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Usuario;
+use app\models\CadenaAprobacion;
 
 /**
- * UsuarioSearch represents the model behind the search form about `app\models\Usuario`.
+ * CadenaAprobacionSearch represents the model behind the search form about `app\models\CadenaAprobacion`.
  */
-class UsuarioSearch extends Usuario
+class CadenaAprobacionSearch extends CadenaAprobacion
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class UsuarioSearch extends Usuario
     public function rules()
     {
         return [
-            [['codigo', 'rol'], 'integer'],
-            [['nombre', 'apellido', 'email', 'usuario', 'contrasena'], 'safe'],
+            [['codigo', 'estado'], 'integer'],
+            [['nombre'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class UsuarioSearch extends Usuario
      */
     public function search($params)
     {
-        $query = Usuario::find();
+        $query = CadenaAprobacion::find();
 
         // add conditions that should always apply here
 
@@ -60,15 +60,10 @@ class UsuarioSearch extends Usuario
         // grid filtering conditions
         $query->andFilterWhere([
             'codigo' => $this->codigo,
-            'rol' => $this->rol,
+            'estado' => $this->estado,
         ]);
 
-        $query->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'apellido', $this->apellido])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'usuario', $this->usuario])
-            ->andFilterWhere(['like', 'contrasena', $this->contrasena])
-            ->andWhere( [ 'not', [ 'codigo' => Yii::$app->user->identity->codigo ] ] );
+        $query->andFilterWhere(['like', 'nombre', $this->nombre]);
 
         return $dataProvider;
     }
