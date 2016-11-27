@@ -43,7 +43,7 @@ class Entrada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final', 'estado', 'tipo', 'usuario', 'entrada'], 'required'],
+            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final', 'estado', 'tipo', 'usuario' ], 'required'],
             [['respuesta'], 'string'],
             [['fecha_inicial', 'fecha_final'], 'safe'],
             [['estado', 'tipo', 'usuario', 'entrada'], 'integer'],

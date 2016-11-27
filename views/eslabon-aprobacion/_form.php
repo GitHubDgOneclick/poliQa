@@ -34,7 +34,7 @@ $this->registerJs(
             </div>
             <div class="col-xs-1">
                 <div class="form-group">
-                    <?= Html::submitButton('<i class="fa fa-plus" aria-hidden="true"></i>' , ['class' => 'btn btn-success' ]) ?>
+                    <?= Html::submitButton('<i class="fa fa-plus" aria-hidden="true"></i> Agregar Eslabon' , ['class' => 'btn btn-success' ]) ?>
                 </div>
             </div>
             <?= $form->field($model, 'cadena_aprobacion')->textInput(['type'=>'hidden'])->label(false) ?>

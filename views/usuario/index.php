@@ -38,21 +38,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{view} {change-editor} {change-user}',
                         'buttons' => [
                             'change-editor' => function ($url, $model) {
-                                if($model->rol == Rol::ROL_EDITOR ){
-                                    return '';
-                                } else {
-                                    return Html::a('<i class="fa fa-user-circle-o" aria-hidden="true"></i>', $url, [
+                                if($model->rol == Rol::ROL_USUARIO ){
+                                    return Html::a('<i class="fa fa-user-o" aria-hidden="true"></i>', $url, [
                                         'title' => 'Cambiar a Editor',
                                     ]);
                                 }
                             },
                             'change-user' => function ($url, $model) {
-                                if($model->rol == Rol::ROL_USUARIO ){
-                                    return Html::a('<i class="fa fa-users" aria-hidden="true"></i>', $url, [
+                                if($model->rol == Rol::ROL_EDITOR ){
+                                    return Html::a('<i class="fa fa-users" aria-hidden="true"></i>', $url , [
                                                 'title' => 'Cambiar a Usuario',
                                     ]);
-                                } else {
-                                    return '';
                                 }
                             },
                         ],

@@ -118,6 +118,7 @@ class UsuarioController extends Controller
     {
         $model = $this->findModel($id);
         $model->rol = Rol::ROL_EDITOR; 
+        $model->save();
         return $this->redirect(['index']);
     }
 
@@ -131,6 +132,7 @@ class UsuarioController extends Controller
     {
         $model = $this->findModel($id);
         $model->rol = Rol::ROL_USUARIO; 
+        $model->save();
         return $this->redirect(['index']);
     }
 

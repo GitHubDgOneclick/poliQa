@@ -84,4 +84,13 @@ return array (
       '@vova07/imperavi' => $vendorDir . '/vova07/yii2-imperavi-widget/src',
     ),
   ),
+  'kartik-v/yii2-field-range' => 
+  array (
+    'name' => 'kartik-v/yii2-field-range',
+    'version' => '1.3.1.0',
+    'alias' => 
+    array (
+      '@kartik/field' => $vendorDir . '/kartik-v/yii2-field-range',
+    ),
+  ),
 );

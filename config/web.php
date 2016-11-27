@@ -1,7 +1,8 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-
+Yii::setAlias('@pathImagenes', __DIR__ . '/../web/img/');
+Yii::setAlias('@pathArchivos', __DIR__ . '/../web/files/');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),

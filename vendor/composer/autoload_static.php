@@ -35,6 +35,7 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
         ),
         'k' => 
         array (
+            'kartik\\field\\' => 13,
             'kartik\\date\\' => 12,
             'kartik\\base\\' => 12,
         ),
@@ -129,6 +130,10 @@ class ComposerStaticInitfb27322039e0bc36b914a8e277d83a9f
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'kartik\\field\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-field-range',
         ),
         'kartik\\date\\' => 
         array (
