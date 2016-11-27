@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="page-header">
     	<h1><?= Html::encode($this->title) ?></h1>
 	</div>
-    <div class="col-xs-12">
+    <div class="col-xs-8 col-xs-offset-2">
     	<?= $this->render('_form', ['model' => $model]); ?>
     </div>
     <div class="col-xs-12">

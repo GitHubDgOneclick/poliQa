@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use app\models\CadenaAprobacion;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CadenaAprobacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -30,31 +30,40 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'yii\grid\SerialColumn'],
 
                         'nombre',
-                        'estado',
+                        [
+                            'attribute' => 'estado',
+                            'value' => function ( $model ) {
+                                if ( $model->estado == CadenaAprobacion::ESTADO_ACTIVO  ) {
+                                    return 'Activo';
+                                } else {
+                                    return 'No Activo';
+                                }
+                            },
+                        ],
 
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'contentOptions'=>['class'=>'text text-center'],
-                            'template' => '{view} {change-editor} {change-user}',
+                            'template' => '{view} {change-active} {change-no-active}',
                             'buttons' => [
                                 'view' => function ($url, $model) {
                                     return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>', ['/eslabon-aprobacion/index' , 'cadena'=> $model->codigo ] , [
                                         'title' => 'Ver',
                                     ]);
                                 },
-                                'change-editor' => function ($url, $model) {
-                                   
-                                        return Html::a('<i class="fa fa-user-circle-o" aria-hidden="true"></i>', $url, [
-                                            'title' => 'Cambiar a Editor',
+                                'change-active' => function ($url, $model) {
+                                    if ($model->estado == CadenaAprobacion::ESTADO_INACTIVO) {
+                                        return Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i>', $url, [
+                                            'title' => 'Activar Check',
                                         ]);
-                                    
+                                    }
                                 },
-                                'change-user' => function ($url, $model) {
-                                    
-                                        return Html::a('<i class="fa fa-users" aria-hidden="true"></i>', $url, [
-                                                    'title' => 'Cambiar a Usuario',
+                                'change-no-active' => function ($url, $model) {
+                                    if ($model->estado == CadenaAprobacion::ESTADO_ACTIVO) {
+                                        return Html::a('<i class="fa fa-times" aria-hidden="true"></i>', $url, [
+                                                    'title' => 'Desactivar Check',
                                         ]);
-
+                                    }
                                 },
                             ],
                         ],

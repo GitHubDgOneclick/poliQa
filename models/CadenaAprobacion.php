@@ -15,6 +15,8 @@ use Yii;
  */
 class CadenaAprobacion extends \yii\db\ActiveRecord
 {
+    const ESTADO_ACTIVO = 1;
+    const ESTADO_INACTIVO = 0;
     /**
      * @inheritdoc
      */

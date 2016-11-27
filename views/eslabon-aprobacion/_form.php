@@ -26,10 +26,10 @@ $this->registerJs(
         <?php $form = ActiveForm::begin([
             'action' => ['create'],
         ]); ?>
-            <div class="col-xs-3 col-xs-offset-1">
+            <div class="col-xs-4 col-xs-offset-1">
                 <?= $form->field($model, 'nombre')->textInput( [ 'placeholder' => "nombre" ] )->label( false ) ?>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-5">
                 <?= $form->field($model, 'usuario')->dropDownList(ArrayHelper::map( UsuarioSearch::allEditors(), 'codigo', 'usuario'),['prompt'=>'Seleccione un usuario'])->label(false) ?>
             </div>
             <div class="col-xs-1">

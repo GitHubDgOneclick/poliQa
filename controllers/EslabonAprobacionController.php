@@ -102,9 +102,10 @@ class EslabonAprobacionController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $cadena = $model->cadena_aprobacion;
+        $model->delete();
+        return $this->redirect(['index', 'cadena' => $cadena]);
     }
 
     /**
