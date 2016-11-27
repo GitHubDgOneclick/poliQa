@@ -13,6 +13,7 @@ use Yii;
  * @property string $fecha_inicial
  * @property string $fecha_final
  * @property integer $estado
+ * @property integer $tipo
  * @property string $usuario
  * @property integer $entrada
  *
@@ -24,6 +25,10 @@ use Yii;
  */
 class Entrada extends \yii\db\ActiveRecord
 {
+    const ESTADO_ACTIVO = 1;
+    const ESTADO_INACTIVO = 0;
+    const TIPO_PREGUNTA = 1; 
+    const TIPO_COMENTARIO = 2;
     /**
      * @inheritdoc
      */
@@ -38,10 +43,10 @@ class Entrada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final', 'estado', 'usuario', 'entrada'], 'required'],
+            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final', 'estado', 'tipo', 'usuario', 'entrada'], 'required'],
             [['respuesta'], 'string'],
             [['fecha_inicial', 'fecha_final'], 'safe'],
-            [['estado', 'usuario', 'entrada'], 'integer'],
+            [['estado', 'tipo', 'usuario', 'entrada'], 'integer'],
             [['pregunta'], 'string', 'max' => 45],
             [['entrada'], 'exist', 'skipOnError' => true, 'targetClass' => Entrada::className(), 'targetAttribute' => ['entrada' => 'codigo']],
             [['usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario' => 'codigo']],
@@ -60,6 +65,7 @@ class Entrada extends \yii\db\ActiveRecord
             'fecha_inicial' => 'Fecha Inicial',
             'fecha_final' => 'Fecha Final',
             'estado' => 'Estado',
+            'tipo' => 'Tipo',
             'usuario' => 'Usuario',
             'entrada' => 'Entrada',
         ];

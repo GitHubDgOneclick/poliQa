@@ -23,12 +23,11 @@ AppAsset::register($this);
     </head>
     <body class="bg-login">
         <?php $this->beginBody() ?>
-
         <div class="container">
-            <div class="row">
+            <div class="row bg-op">
                 <?php
                 NavBar::begin([
-                    'brandLabel' => 'My Company',
+                    'brandLabel' => 'PoliQa',
                     'brandUrl' => Yii::$app->homeUrl,
                     'options' => [
                         'class' => 'navbar navbar-default',
@@ -38,8 +37,6 @@ AppAsset::register($this);
                     'options' => ['class' => 'navbar-nav navbar-right'],
                     'items' => [
                         ['label' => 'Home', 'url' => ['/site/index']],
-                        ['label' => 'About', 'url' => ['/site/about']],
-                        ['label' => 'Contact', 'url' => ['/site/contact']],
                         Yii::$app->user->isGuest ? (
                             ['label' => 'Login', 'url' => ['/site/login']]
                         ) : (
@@ -57,29 +54,18 @@ AppAsset::register($this);
                 NavBar::end();
                 ?>
             </div>
-            <div class="row">
-                <?= Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ]) ?>
-            </div>
-            <div class="row text text-center">
+            <div class="row bg-op">
                 <div id="alerts" class="col-lg-offset-3 col-lg-6">
                     <?php foreach ( Yii::$app->session->getAllFlashes() as $key => $message ): ?>
                         <div class="alert alert-<?= $key ?>" role="alert"><?= $message ?></div>
                     <?php endforeach ?>
                 </div>
+                <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
             </div>
             <?= $content ?>
-        </div>        
-
-        <footer class="footer">
-            <div class="container">
-                <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-                <p class="pull-right"><?= Yii::powered() ?></p>
-            </div>
-        </footer>
-
+        </div>
         <?php $this->endBody() ?>
     </body>
 </html>

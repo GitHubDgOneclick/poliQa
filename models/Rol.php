@@ -9,11 +9,18 @@ use Yii;
  *
  * @property integer $codigo
  * @property string $nombre
+ * @property integer $estado
  *
  * @property Usuario[] $usuarios
  */
 class Rol extends \yii\db\ActiveRecord
 {
+
+    const ESTADO_ACTIVO = 1;
+    const ESTADO_INACTIVO = 0;
+    const ROL_ADMINISTRADOR = 1;
+    const ROL_EDITOR = 0;
+    const ROL_USUARIO = 1;
     /**
      * @inheritdoc
      */
@@ -29,6 +36,7 @@ class Rol extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
+            [['estado'], 'integer'], 
             [['nombre'], 'string', 'max' => 45],
         ];
     }
@@ -41,6 +49,7 @@ class Rol extends \yii\db\ActiveRecord
         return [
             'codigo' => 'Codigo',
             'nombre' => 'Nombre',
+            'estado' => 'Estado', 
         ];
     }
 
@@ -50,5 +59,10 @@ class Rol extends \yii\db\ActiveRecord
     public function getUsuarios()
     {
         return $this->hasMany(Usuario::className(), ['rol' => 'codigo']);
+    }
+
+    public static function all()
+    {
+        return Rol::find()->where(['estado'=> Rol::ESTADO_ACTIVO ])->all();
     }
 }

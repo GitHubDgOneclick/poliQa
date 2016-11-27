@@ -18,6 +18,8 @@ use Yii;
  */
 class Aprobaciones extends \yii\db\ActiveRecord
 {
+    const ESTADO_APROVADO = 1;
+    const ESTADO_NO_APROVADO = 0;
     /**
      * @inheritdoc
      */

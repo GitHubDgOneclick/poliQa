@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Usuario;
 use app\models\UsuarioSearch;
+use app\models\Rol;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -103,6 +104,32 @@ class UsuarioController extends Controller
     {
         $this->findModel($id)->delete();
 
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Cambiar usuario a editor.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionChangeEditor($id)
+    {
+        $model = $this->findModel($id);
+        $model->rol = Rol::ROL_EDITOR; 
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Cambiar editor a usuario.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionChangeUser($id)
+    {
+        $model = $this->findModel($id);
+        $model->rol = Rol::ROL_USUARIO; 
         return $this->redirect(['index']);
     }
 
