@@ -37,7 +37,7 @@ AppAsset::register($this);
                 echo Nav::widget([
                     'options' => ['class' => 'navbar-nav navbar-right'],
                     'items' => [
-                        '<li><a href="'.Yii::$app->urlManager->createUrl([ '/entrada/' ]).'"><i class="fa fa-question-circle-o" aria-hidden="true"></i> Preguntas</a></li>',
+                        
                         Yii::$app->user->isGuest ? (
                             ['label' => 'Login', 'url' => ['/usuario/login']]
                         ) : (
@@ -50,6 +50,7 @@ AppAsset::register($this);
                                         '<li><a href="'.Yii::$app->urlManager->createUrl([ '/usuario/view' , 'id' => Yii::$app->user->identity->codigo  ]).'"><i class="fa fa-user-o" aria-hidden="true"></i> Ver Perfil</a></li>',
                                         '<li><a href="'.Yii::$app->urlManager->createUrl(['/usuario/index']).'"><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a></li>',
                                         '<li><a href="'.Yii::$app->urlManager->createUrl(['/cadena-aprobacion']).'"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cheks de Aprobacion</a></li>',
+                                        '<li><a href="'.Yii::$app->urlManager->createUrl([ '/entrada/' ]).'"><i class="fa fa-question-circle-o" aria-hidden="true"></i> Preguntas</a></li>',
                                         '<li role="separator" class="divider"></li>',
                                         '<li><a href="'.Yii::$app->urlManager->createUrl(['usuario/logout']).'"><i class="fa fa-reply" aria-hidden="true"></i> Cerrar sesion</a></li>',
                                     ],'options' => [

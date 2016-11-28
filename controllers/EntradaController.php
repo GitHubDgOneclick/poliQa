@@ -3,11 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Entrada;
-use app\models\EntradaSearch;
+use app\assets\AppHandlingErrors;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use app\models\Entrada;
+use app\models\EntradaSearch;
+use app\models\Etiqueta;
+use app\models\EtiquetaEntrada;
+use app\models\CadenaAprobacion;
+use app\models\Aprobaciones;
 use vova07\imperavi\actions\GetAction;
 
 /**
@@ -101,12 +107,37 @@ class EntradaController extends Controller
         $model->tipo = Entrada::TIPO_PREGUNTA;
         $model->usuario = Yii::$app->user->identity->codigo;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->codigo]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                if ( $this->generarEtiquetas( $model , Etiqueta::TIPO_CATEGORIA ) && $this->generarEtiquetas( $model , Etiqueta::TIPO_PALABRA_CLAVE ) ) {
+                    if ( $this->generarAprobaciones( $model ) ) {
+                        $transaction->commit();
+                        return $this->redirect( [ 'view', 'id' => $model->codigo ] );
+                    } else {
+                        $transaction->rollBack();
+                        AppHandlingErrors::setFlash( 'danger' , 'Problemas generando las aprobaciones' );
+                        return $this->render('create', [
+                            'model' => $model,
+                        ]);
+                    }
+                    #$this->retornarAprobaciones( $model );
+                    #$this->eliminarAprobaciones( $model );
+                } else {
+                    $transaction->rollBack();
+                    AppHandlingErrors::setFlash( 'danger' , 'Problemas generando las etiquetas' );
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }            
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            AppHandlingErrors::setFlash( 'danger' ,  $e->message );
         }
     }
 
@@ -119,13 +150,88 @@ class EntradaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->codigo]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $categorias = [];
+        $palabrasClave = [];
+        if ( isset( $model->etiquetaEntradas ) && count( $model->etiquetaEntradas ) ) {
+            foreach ( $model->etiquetaEntradas as $key => $etiquetaEntrada ) {
+                if ( $etiquetaEntrada->etiqueta0->tipo == Etiqueta::TIPO_CATEGORIA ) {
+                    array_push( $categorias , $etiquetaEntrada->etiqueta0->valor );
+                } else if ( $etiquetaEntrada->etiqueta0->tipo == Etiqueta::TIPO_PALABRA_CLAVE ) {
+                    array_push( $palabrasClave , $etiquetaEntrada->etiqueta0->valor );
+                }
+            }
+        }
+        $cadenaAprobacion = 0;
+        if ( isset( $model->aprobaciones ) && count( $model->aprobaciones ) ) {
+            $cadenaAprobacion = $model->aprobaciones[0]->eslabonAprobacion->cadena_aprobacion;
+        }
+        
+        $model->categorias = implode( ",", $categorias );
+        $model->palabrasClave = implode( ",", $palabrasClave );
+        $model->cadenaAprobacion = $cadenaAprobacion;
+        
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $oldModel = $model;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                if ( $this->generarEtiquetas( $model , Etiqueta::TIPO_CATEGORIA ) && $this->generarEtiquetas( $model , Etiqueta::TIPO_PALABRA_CLAVE ) ) {
+                    if ( isset( $model->aprobaciones ) && count( $model->aprobaciones ) > 0 ) {
+                        if ( $model->cadenaAprobacion != $model->aprobaciones[0]->eslabonAprobacion->cadena_aprobacion ) {
+                            if ( $this->eliminarAprobaciones( $model ) ) {
+                                if ( !$this->generarAprobaciones( $model ) ) {
+                                    $transaction->rollBack();
+                                    AppHandlingErrors::setFlash( 'danger' , 'Problemas generando las aprobaciones(2)' );
+                                    return $this->render('update', [
+                                        'model' => $model,
+                                    ]);
+                                } 
+                            } else {
+                                $transaction->rollBack();
+                                AppHandlingErrors::setFlash( 'danger' , 'Problemas eliminando las aprobaciones' );
+                                return $this->render('update', [
+                                    'model' => $model,
+                                ]);
+                            }
+                        } else if( $model->titulo_listado != $oldModel->titulo_listado ||
+                            $model->descripcion_listado != $oldModel->descripcion_listado ||
+                            $model->pregunta != $oldModel->pregunta ||
+                            $model->respuesta != $oldModel->respuesta ||
+                            $model->fecha_inicial != $oldModel->fecha_inicial ||
+                            $model->fecha_final != $oldModel->fecha_final ) {
+                            if ( !$this->retornarAprobaciones( $model ) ) {
+                                $transaction->rollBack();
+                                AppHandlingErrors::setFlash( 'danger' , 'Problemas generando las aprobaciones(3)' );
+                                return $this->render('update', [
+                                    'model' => $model,
+                                ]);
+                            }
+                        }
+                    } else {
+                        if ( !$this->generarAprobaciones( $model ) ) {
+                            $transaction->rollBack();
+                            AppHandlingErrors::setFlash( 'danger' , 'Problemas generando las aprobaciones(1)' );
+                            return $this->render('update', [
+                                'model' => $model,
+                            ]);
+                        } 
+                    }
+                    $transaction->commit();
+                    return $this->redirect( [ 'view', 'id' => $model->codigo ] );
+                } else {
+                    $transaction->rollBack();
+                    AppHandlingErrors::setFlash( 'danger' , 'Problemas generando las etiquetas' );
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            AppHandlingErrors::setFlash( 'danger' ,  $e->message );
         }
     }
 
@@ -143,6 +249,34 @@ class EntradaController extends Controller
     }
 
     /**
+     * aprobar eslabon
+     * 
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionApproveLink($id)
+    {
+        $mAprobacion = Aprobaciones::findOne( $id );
+        $mAprobacion->estado = Aprobaciones::ESTADO_APROVADO;
+        $mAprobacion->save();
+        return $this->redirect(['view', 'id' => $mAprobacion->entrada ]);
+    }
+
+    /**
+     * Deletes an existing Entrada model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDisapproveLink($id)
+    {
+        $mAprobacion = Aprobaciones::findOne( $id );
+        $mAprobacion->estado = Aprobaciones::ESTADO_NO_APROVADO;
+        $mAprobacion->save();
+        return $this->redirect(['view', 'id' => $mAprobacion->entrada ]);
+    }
+
+    /**
      * Finds the Entrada model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -157,4 +291,132 @@ class EntradaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * gnenerar etiquetas.
+     * se tomanlos parametros palabras clave y las categorias .
+     * @param Entrada $entrada
+     * @param integer $tipo
+     * @return true|false
+     */
+    protected function generarEtiquetas( $entrada , $tipo)
+    {
+        $bResulrado = true;
+        $etiquetas = [];
+        if ( Etiqueta::TIPO_CATEGORIA == $tipo ) {
+            $etiquetas = array_unique( array_map('trim', explode( ',' , strtoupper( $entrada->categorias ) ) ) );
+        } else {
+            $etiquetas = array_unique( array_map('trim', explode( ',' , strtoupper( $entrada->palabrasClave ) ) ) );
+        }
+        $arrayEtiquetas = ArrayHelper::map( Etiqueta::find()
+            ->where([ 'tipo' => $tipo ])
+            ->andWhere([ 'IN', 'valor', $etiquetas ])
+            ->all() 
+        , 'codigo', 'valor') ;
+        $arrayEtiquetasEntradaEx = [];
+        if ( isset( $entrada->etiquetaEntradas ) && count( $entrada->etiquetaEntradas ) > 0 ) {
+            $arrayEtiquetasEntradaEx = ArrayHelper::map( $entrada->etiquetaEntradas , 'etiqueta', 'etiqueta0.valor') ;
+            foreach ( $entrada->etiquetaEntradas as $key => $etiquetaEntrada ) {
+                if ( $etiquetaEntrada->etiqueta0->tipo == $tipo && !array_key_exists( $etiquetaEntrada->etiqueta , $arrayEtiquetas ) ) {
+                    $etiquetaEntrada->delete();
+                }
+            }
+        }
+        if ( count( $etiquetas ) > 0 ) {
+            foreach ( $etiquetas as $key => $etiqueta ) {
+                $codigoEtiqueta = 0;
+                if ( $bResulrado ) {
+                    if ( in_array( $etiqueta , $arrayEtiquetas ) ) {
+                        $codigoEtiqueta = array_search( $etiqueta , $arrayEtiquetas );
+                    } else {
+                        $mEtitiqueta = new Etiqueta();
+                        $mEtitiqueta->valor = $etiqueta;
+                        $mEtitiqueta->tipo = $tipo;
+                        if ( $mEtitiqueta->save() ) {
+                            $codigoEtiqueta = $mEtitiqueta->codigo;
+                        } else {
+                            $bResulrado = false;
+                        }
+                    }
+                    if ( !array_key_exists( $codigoEtiqueta , $arrayEtiquetasEntradaEx ) ) {
+                        $mEtiquetaEntrada = new EtiquetaEntrada;
+                        $mEtiquetaEntrada->entrada = $entrada->codigo;
+                        $mEtiquetaEntrada->etiqueta = $codigoEtiqueta;
+                        if ( !$mEtiquetaEntrada->save() ) {
+                            $bResulrado = false;
+                        }
+                    }
+                }
+            }
+        }
+        return $bResulrado;
+    }
+
+    /**
+     * generarAprobaciones.
+     * se crean los registros de las aprobaciones correspondientes.
+     * @param Entrada $entrada
+     * @return true|false
+     */
+    protected function generarAprobaciones( $entrada ){
+        $bResultado = true;
+        $mCadenaAprobacion = CadenaAprobacion::findOne( $entrada->cadenaAprobacion );
+        if ( isset( $mCadenaAprobacion->eslabonAprobacions ) && count( $mCadenaAprobacion->eslabonAprobacions ) ) {
+            foreach ( $mCadenaAprobacion->eslabonAprobacions  as $key => $eslabon ) {
+                if ( $bResultado ) {
+                    $mAprobacion = new Aprobaciones();
+                    $mAprobacion->estado = Aprobaciones::ESTADO_NO_APROVADO;
+                    $mAprobacion->eslabon_aprobacion = $eslabon->codigo;
+                    $mAprobacion->entrada = $entrada->codigo;
+                    if ( !$mAprobacion->save() ) {
+                        $bResultado = false;
+                    }
+                }
+            }
+        }
+        return $bResultado;
+    }
+
+    /**
+     * retornar.
+     * cambia los estados de las aprobaciones actuales y elimina los comentarios.
+     * @param Entrada $entrada
+     * @return true|false
+     */
+    protected function retornarAprobaciones( $entrada ){
+        $bResultado = true;
+        if ( isset( $entrada->aprobaciones ) && count( $entrada->aprobaciones ) ) {
+            foreach ( $entrada->aprobaciones  as $key => $aprobacion ) {
+                if ( $bResultado ) {
+                    $aprobacion->estado = Aprobaciones::ESTADO_NO_APROVADO;
+                    $aprobacion->comentario = '';
+                    if ( !$aprobacion->save() ) {
+                        $bResultado = false;
+                    }
+                }
+            }
+        }
+        return $bResultado;
+    }
+
+    /**
+     * eliminarAprobaciones.
+     * elimina las aprobaciones que corresponden.
+     * @param Entrada $entrada
+     * @return true|false
+     */
+    protected function eliminarAprobaciones( $entrada ){
+        $bResultado = true;
+        if ( isset( $entrada->aprobaciones ) && count( $entrada->aprobaciones ) ) {
+            foreach ( $entrada->aprobaciones  as $key => $aprobacion ) {
+                if ( $bResultado ) {
+                    if ( !$aprobacion->delete() ) {
+                        $bResultado = false;
+                    }
+                }
+            }
+        }
+        return $bResultado;
+    }
+
 }

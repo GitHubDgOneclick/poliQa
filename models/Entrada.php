@@ -31,6 +31,10 @@ class Entrada extends \yii\db\ActiveRecord
     const ESTADO_INACTIVO = 0;
     const TIPO_PREGUNTA = 1; 
     const TIPO_COMENTARIO = 2;
+
+    public $categorias;
+    public $palabrasClave;
+    public $cadenaAprobacion;
     /**
      * @inheritdoc
      */
@@ -45,7 +49,7 @@ class Entrada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final', 'estado', 'tipo', 'usuario'], 'required'],
+            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final', 'estado', 'tipo', 'usuario', 'categorias', 'palabrasClave', 'titulo_listado', 'descripcion_listado','cadenaAprobacion'], 'required'],
             [['pregunta', 'respuesta'], 'string'],
             [['fecha_inicial', 'fecha_final'], 'safe'],
             [['estado', 'tipo', 'usuario', 'entrada'], 'integer'],

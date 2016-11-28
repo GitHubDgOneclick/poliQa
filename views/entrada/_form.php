@@ -1,10 +1,12 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use app\models\cadenaAprobacionSearch;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use vova07\imperavi\Widget;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Entrada */    
@@ -50,7 +52,7 @@ use yii\helpers\Url;
                 ]
             ]
         ]) ?>
-        <label class="control-label">Valido De - Hasta </label>
+        <label class="control-label">Valides</label>
         <?= DatePicker::widget([
             'model' => $model,
             'attribute' => 'fecha_inicial',
@@ -64,6 +66,10 @@ use yii\helpers\Url;
                 'autoclose' => true,
             ]
         ]) ?>
+        <?= $form->field($model, 'categorias')->textInput() ?>
+        <?= $form->field($model, 'palabrasClave')->textInput() ?>
+        <?= $form->field($model, 'cadenaAprobacion')->dropDownList(ArrayHelper::map(cadenaAprobacionSearch::all(), 'codigo', 'nombre'),['prompt'=>'Seleccione un rol']) ?>
+
         <?= $form->field($model, 'estado')->textInput([ 'type' => 'hidden' ])->label( false ) ?>
         <?= $form->field($model, 'tipo')->textInput([ 'type' => 'hidden' ])->label( false ) ?>
         <?= $form->field($model, 'entrada')->textInput([ 'type' => 'hidden' ])->label( false ) ?>

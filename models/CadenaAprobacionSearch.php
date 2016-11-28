@@ -67,4 +67,9 @@ class CadenaAprobacionSearch extends CadenaAprobacion
 
         return $dataProvider;
     }
+
+    public static function all()
+    {
+        return CadenaAprobacion::find()->andFilterWhere( [ 'estado' => CadenaAprobacion::ESTADO_ACTIVO ] )->all();
+    }
 }

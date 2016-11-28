@@ -34,7 +34,7 @@ class Aprobaciones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estado', 'comentario', 'eslabon_aprobacion', 'entrada'], 'required'],
+            [['estado', 'eslabon_aprobacion', 'entrada'], 'required'],
             [['estado', 'eslabon_aprobacion', 'entrada'], 'integer'],
             [['comentario'], 'string', 'max' => 45],
             [['eslabon_aprobacion'], 'exist', 'skipOnError' => true, 'targetClass' => EslabonAprobacion::className(), 'targetAttribute' => ['eslabon_aprobacion' => 'codigo']],
