@@ -29,24 +29,28 @@ class EntradaController extends Controller
         return [
             'images-get' => [
                 'class' => 'vova07\imperavi\actions\GetAction',
-                'url' => 'http://localhost:81/PoliQa/poliQa/web/img/', // Directory URL address, where files are stored.
+                #'url' => 'http://localhost:81/PoliQa/poliQa/web/img/', // Directory URL address, where files are stored.
+                'url' => 'http://ec2-54-172-245-23.compute-1.amazonaws.com/img/', // Directory URL address, where files are stored.
                 'path' => '@pathImagenes', // Or absolute path to directory where files are stored.
                 'type' => GetAction::TYPE_IMAGES,
             ],
             'files-get' => [
                 'class' => 'vova07\imperavi\actions\GetAction',
-                'url' => 'http://localhost:81/PoliQa/poliQa/web/files/', // Directory URL address, where files are stored.
+                #'url' => 'http://localhost:81/PoliQa/poliQa/web/files/', // Directory URL address, where files are stored.
+                'url' => 'http://ec2-54-172-245-23.compute-1.amazonaws.com/files/', // Directory URL address, where files are stored.
                 'path' => '@pathArchivos', // Or absolute path to directory where files are stored.
                 'type' => GetAction::TYPE_FILES,
             ],
             'image-upload' => [
                 'class' => 'vova07\imperavi\actions\UploadAction',
-                'url' => 'http://localhost:81/PoliQa/poliQa/web/img/', // Directory URL address, where files are stored.
+                #'url' => 'http://localhost:81/PoliQa/poliQa/web/img/', // Directory URL address, where files are stored.
+                'url' => 'http://ec2-54-172-245-23.compute-1.amazonaws.com/img/', // Directory URL address, where files are stored.
                 'path' => '@pathImagenes', // Or absolute path to directory where files are stored.
             ],
             'file-upload' => [
                 'class' => 'vova07\imperavi\actions\UploadAction',
-                'url' => 'http://localhost:81/PoliQa/poliQa/web/files/', // Directory URL address, where files are stored.
+                #'url' => 'http://localhost:81/PoliQa/poliQa/web/files/', // Directory URL address, where files are stored.
+                'url' => 'http://ec2-54-172-245-23.compute-1.amazonaws.com/files/', // Directory URL address, where files are stored.
                 'path' => '@pathArchivos', // Or absolute path to directory where files are stored.
                 'uploadOnlyImage' => false, // For not image-only uploading.
             ],

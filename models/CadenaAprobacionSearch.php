@@ -10,7 +10,7 @@ use app\models\CadenaAprobacion;
 /**
  * CadenaAprobacionSearch represents the model behind the search form about `app\models\CadenaAprobacion`.
  */
-class CadenaAprobacionSearch extends CadenaAprobacion
+class CadenaAprobacionSearch extends CadenaAprobacion 
 {
     /**
      * @inheritdoc
