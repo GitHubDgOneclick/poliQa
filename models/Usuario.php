@@ -63,7 +63,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getEntradas()
     {
-        return $this->hasMany(Entrada::className(), [ 'usuario' => 'codigo'  , 'estado' => Entrada::ESTADO_ACTIVO ]);
+        return $this->hasMany(Entrada::className(), [ 'usuario' => 'codigo'  /*, 'estado' => Entrada::ESTADO_ACTIVO*/ ]);
     }
 
     /**

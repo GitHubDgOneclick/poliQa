@@ -14,8 +14,25 @@ use yii\helpers\Url;
 <div class="entrada-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-        <?= $form->field($model, 'pregunta')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'titulo_listado')->textInput() ?>
+        <?= $form->field($model, 'descripcion_listado')->textArea(['rows' => '6']) ?>
+        <?= $form->field($model, 'pregunta')->widget( Widget::className(), [
+            'settings' => [
+                'lang' => 'es',
+                'minHeight' => 200,
+                'fileUpload' => Url::to(['/entrada/file-upload']),
+                'imageUpload' => Url::to(['/entrada/image-upload']),
+                'plugins' => [
+                    'clips',
+                    'fullscreen',
+                    'filemanager',
+                    'imagemanager',
+                    'table',
+                    'video',
+                    'textdirection',
+                ]
+            ]
+        ]) ?>
         <?= $form->field($model, 'respuesta')->widget( Widget::className(), [
             'settings' => [
                 'lang' => 'es',

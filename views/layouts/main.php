@@ -37,7 +37,7 @@ AppAsset::register($this);
                 echo Nav::widget([
                     'options' => ['class' => 'navbar-nav navbar-right'],
                     'items' => [
-                        ['label' => 'preguntas', 'url' => ['/entrada/']],
+                        '<li><a href="'.Yii::$app->urlManager->createUrl([ '/entrada/' ]).'"><i class="fa fa-question-circle-o" aria-hidden="true"></i> Preguntas</a></li>',
                         Yii::$app->user->isGuest ? (
                             ['label' => 'Login', 'url' => ['/usuario/login']]
                         ) : (

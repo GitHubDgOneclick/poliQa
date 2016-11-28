@@ -19,7 +19,7 @@ class EntradaSearch extends Entrada
     {
         return [
             [['codigo', 'estado', 'tipo', 'usuario', 'entrada'], 'integer'],
-            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final'], 'safe'],
+            [['titulo_listado', 'descripcion_listado', 'pregunta', 'respuesta', 'fecha_inicial', 'fecha_final'], 'safe'],
         ];
     }
 
@@ -68,8 +68,10 @@ class EntradaSearch extends Entrada
             'entrada' => $this->entrada,
         ]);
 
-        $query->andFilterWhere(['like', 'pregunta', $this->pregunta])
-            ->andFilterWhere(['like', 'respuesta', $this->respuesta]);
+        $query->andFilterWhere(['like', 'titulo_listado', $this->titulo_listado])
+           ->andFilterWhere(['like', 'descripcion_listado', $this->descripcion_listado])
+           ->andFilterWhere(['like', 'pregunta', $this->pregunta])
+           ->andFilterWhere(['like', 'respuesta', $this->respuesta]);
 
         return $dataProvider;
     }

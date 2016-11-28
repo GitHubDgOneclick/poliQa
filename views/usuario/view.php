@@ -47,7 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <li class="media"> 
                             <div class="media-body">                             
                                 <?php if ( $entrada->tipo == Entrada::TIPO_PREGUNTA ): ?>
-                                    <h6 class="media-heading"><?= $entrada->pregunta ?> | <small>Pregunta</small></h6>     
+                                    <h4 class="media-heading"><i class="fa fa-question-circle-o" aria-hidden="true"></i> <?= $entrada->pregunta ?> | <small>Pregunta</small></h4>
+                                    <p><?= substr( strip_tags( $entrada->respuesta ) , 0, 250 ).'...' ?></p>
                                     <p>
                                         <?= Html::a('Ver Pregunta', ['entrada/view', 'id' => $entrada->codigo], ['class' => 'btn btn-primary']) ?>
                                     </p>

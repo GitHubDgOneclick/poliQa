@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Entrada */
 
-$this->title = 'Editar Pregunta: ' . $model->pregunta;
+$this->title = 'Editar Pregunta: ' . $model->titulo_listado;
 $this->params['breadcrumbs'][] = ['label' => 'Entradas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->pregunta, 'url' => ['view', 'id' => $model->codigo]];
+$this->params['breadcrumbs'][] = ['label' => $model->titulo_listado, 'url' => ['view', 'id' => $model->codigo]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="row bg-op padding-15">

@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "entrada".
  *
  * @property integer $codigo
+ * @property string $titulo_listado 
+ * @property string $descripcion_listado
  * @property string $pregunta
  * @property string $respuesta
  * @property string $fecha_inicial
@@ -43,11 +45,12 @@ class Entrada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final', 'estado', 'tipo', 'usuario' ], 'required'],
-            [['respuesta'], 'string'],
+            [['pregunta', 'respuesta', 'fecha_inicial', 'fecha_final', 'estado', 'tipo', 'usuario'], 'required'],
+            [['pregunta', 'respuesta'], 'string'],
             [['fecha_inicial', 'fecha_final'], 'safe'],
             [['estado', 'tipo', 'usuario', 'entrada'], 'integer'],
-            [['pregunta'], 'string', 'max' => 45],
+            [['titulo_listado'], 'string', 'max' => 100], 
+            [['descripcion_listado'], 'string', 'max' => 450], 
             [['entrada'], 'exist', 'skipOnError' => true, 'targetClass' => Entrada::className(), 'targetAttribute' => ['entrada' => 'codigo']],
             [['usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario' => 'codigo']],
         ];
@@ -60,6 +63,8 @@ class Entrada extends \yii\db\ActiveRecord
     {
         return [
             'codigo' => 'Codigo',
+            'titulo_listado' => 'Pequeño Titulo', 
+            'descripcion_listado' => 'Descripcion Breve',
             'pregunta' => 'Pregunta',
             'respuesta' => 'Respuesta',
             'fecha_inicial' => 'Fecha Inicial',

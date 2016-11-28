@@ -20,11 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Nueva Pregunta', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
     <?php endif ?>
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return $this->render('_item', ['model' => $model]);
-        },
-    ]) ?>
+    <div class="row text-center">
+        <?= ListView::widget([
+            'dataProvider' => $dataProvider,
+            'itemOptions' => ['class' => 'item'],
+            'itemView' => function ($model, $key, $index, $widget) {
+                return $this->render('_item', ['model' => $model]);
+            },
+        ]) ?>
+    </div>
 </div>

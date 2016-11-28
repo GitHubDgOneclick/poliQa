@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 ?>
-<div class="row">
-	<div class="col-xs-10 col-xs-offset-1">
+
+	<div class="col-xs-6 ">
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="page-header">
-					<h4><?= $model->pregunta ?> <small> </small></h4>
+					<?= Html::a( '<h4>'. $model->titulo_listado . '</h4>' , ['view', 'id' => $model->codigo], []) ?>
 				</div>
-				<p><?= substr( strip_tags($model->respuesta) , 0, 250 ).'...' ?></p>
+				<p class="text text-left" ><?= $model->descripcion_listado ?></p>
 				<div>
 					<ul class="nav nav-pills" role="tablist">
 					<?php if ( isset( $model->entradas ) ): ?>
@@ -26,4 +26,3 @@ use yii\helpers\Html;
 			</div>
 		</div>
 	</div>
-</div>
