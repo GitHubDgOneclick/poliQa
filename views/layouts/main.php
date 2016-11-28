@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use yii\bootstrap\Dropdown;
+use app\models\Rol;
 
 AppAsset::register($this);
 ?>
@@ -26,6 +27,20 @@ AppAsset::register($this);
         <?php $this->beginBody() ?>
         <div class="container">
             <div class="row bg-op row-nav">
+                <?php
+                    if (!Yii::$app->user->isGuest){
+                        $itemMenu = [];
+                        array_push( $itemMenu , '<li><a href="'.Yii::$app->urlManager->createUrl([ '/usuario/view' , 'id' => Yii::$app->user->identity->codigo  ]).'"><i class="fa fa-user-o" aria-hidden="true"></i> Ver Perfil</a></li>' );
+                        if ( Yii::$app->user->identity->rol == Rol::ROL_ADMINISTRADOR ){
+                            array_push( $itemMenu , '<li><a href="'.Yii::$app->urlManager->createUrl(['/usuario/index']).'"><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a></li>');
+                            array_push( $itemMenu , '<li><a href="'.Yii::$app->urlManager->createUrl(['/cadena-aprobacion']).'"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cheks de Aprobacion</a></li>');
+                        } else if ( Yii::$app->user->identity->rol == Rol::ROL_EDITOR ) {
+                            array_push( $itemMenu , '<li><a href="'.Yii::$app->urlManager->createUrl([ '/entrada/' ]).'"><i class="fa fa-question-circle-o" aria-hidden="true"></i> Preguntas</a></li>');
+                        } else if ( Yii::$app->user->identity->rol == Rol::ROL_USUARIO ) {}
+                        array_push( $itemMenu , '<li role="separator" class="divider"></li>');
+                        array_push( $itemMenu , '<li><a href="'.Yii::$app->urlManager->createUrl(['usuario/logout']).'"><i class="fa fa-reply" aria-hidden="true"></i> Cerrar sesion</a></li>');
+                    }
+                ?>
                 <?php
                 NavBar::begin([
                     'brandLabel' => 'PoliQa',
@@ -46,14 +61,8 @@ AppAsset::register($this);
                                    Yii::$app->user->identity->getNombre() . '('. Yii::$app->user->identity->rol0->nombre .') <span class="caret"></span>'.
                                 '</a>'.
                                 Dropdown::widget([
-                                    'items' => [
-                                        '<li><a href="'.Yii::$app->urlManager->createUrl([ '/usuario/view' , 'id' => Yii::$app->user->identity->codigo  ]).'"><i class="fa fa-user-o" aria-hidden="true"></i> Ver Perfil</a></li>',
-                                        '<li><a href="'.Yii::$app->urlManager->createUrl(['/usuario/index']).'"><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a></li>',
-                                        '<li><a href="'.Yii::$app->urlManager->createUrl(['/cadena-aprobacion']).'"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cheks de Aprobacion</a></li>',
-                                        '<li><a href="'.Yii::$app->urlManager->createUrl([ '/entrada/' ]).'"><i class="fa fa-question-circle-o" aria-hidden="true"></i> Preguntas</a></li>',
-                                        '<li role="separator" class="divider"></li>',
-                                        '<li><a href="'.Yii::$app->urlManager->createUrl(['usuario/logout']).'"><i class="fa fa-reply" aria-hidden="true"></i> Cerrar sesion</a></li>',
-                                    ],'options' => [
+                                    'items' => $itemMenu
+                                    ,'options' => [
                                         'class' => 'dropdown-menu',
                                     ]
                                 ]).

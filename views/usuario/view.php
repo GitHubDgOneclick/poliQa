@@ -4,12 +4,17 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\Entrada;
 use app\models\Aprobaciones;
+use app\models\Rol;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
 
 $this->title = $model->nombre . ' ' . $model->apellido ;
-$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
+if (!Yii::$app->user->isGuest){
+    if ( Yii::$app->user->identity->rol == Rol::ROL_ADMINISTRADOR ) {
+        $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
+    }
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row bg-op">
@@ -47,8 +52,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <li class="media"> 
                             <div class="media-body">                             
                                 <?php if ( $entrada->tipo == Entrada::TIPO_PREGUNTA ): ?>
-                                    <h4 class="media-heading"><i class="fa fa-question-circle-o" aria-hidden="true"></i> <?= $entrada->pregunta ?> | <small>Pregunta</small></h4>
-                                    <p><?= substr( strip_tags( $entrada->respuesta ) , 0, 250 ).'...' ?></p>
+                                    <h4 class="media-heading">
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                         <?= $entrada->titulo_listado ?> | <small>Pregunta</small>
+                                    </h4>
+                                    <p><?= $entrada->descripcion_listado ?></p>
                                     <p>
                                         <?= Html::a('Ver Pregunta', ['entrada/view', 'id' => $entrada->codigo], ['class' => 'btn btn-primary']) ?>
                                     </p>
@@ -82,20 +90,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php if ( isset( $eslabon->aprobaciones ) && count( $eslabon->aprobaciones ) > 0 ): ?>
                             <?php foreach ( $eslabon->aprobaciones  as $key => $aprobacion ): ?>
                                 <li class="media"> 
-                                    <div class="media-body">                             
-                                        <h1><?= $aprobacion->entrada0->pregunta ?></h1>
-                                        <p> <?= $eslabon->nombre ?> | 
-                                            <?php if ( $aprobacion->estado == Aprobaciones::ESTADO_APROVADO): ?>  
-                                                <span class="label label-success">Aprobado</span>
-                                            <?php else: ?> 
-                                                <span class="label label-danger">no Aprobado</span>
-                                            <?php endif ?>
-                                        </p>
-                                        <?php if ( $aprobacion->estado == Aprobaciones::ESTADO_APROVADO): ?>  
-                                            <p>
-                                                <?= $aprobacion->comentario ?>
-                                            </p>
-                                        <?php else: ?>
+                                    <div class="media-body">
+                                        <h4>
+                                            <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                            <?= $aprobacion->entrada0->titulo_listado ?> | 
+                                            <small>
+                                                <?= $eslabon->nombre ?> 
+                                                <?php if ( $aprobacion->estado == Aprobaciones::ESTADO_APROVADO): ?>  
+                                                    <span class="label label-success">Aprobado</span>
+                                                <?php else: ?> 
+                                                    <span class="label label-danger">no Aprobado </span>
+                                                <?php endif ?>    
+                                            </small>
+                                        </h4>
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <p>
+                                                    <?= $aprobacion->comentario ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <?php if ( $aprobacion->estado != Aprobaciones::ESTADO_APROVADO): ?>  
                                             <p class="text-center">
                                                 <?= Html::a('Ver Pregunta', ['entrada/view', 'id' => $aprobacion->entrada], ['class' => 'btn btn-primary']) ?>
                                             </p>

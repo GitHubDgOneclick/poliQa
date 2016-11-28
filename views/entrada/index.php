@@ -2,24 +2,26 @@
 
 use yii\helpers\Html;
 use yii\widgets\ListView;
+use app\models\Rol;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EntradaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Entradas';
+$this->title = 'Preguntas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row bg-op padding-15">
     <div class="page-header">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?> | 
+            <?php if (!Yii::$app->user->isGuest): ?>
+                <?php if ( Yii::$app->user->identity->rol == Rol::ROL_ADMINISTRADOR || Yii::$app->user->identity->rol == Rol::ROL_EDITOR ): ?>
+                    <?= Html::a('Nueva Pregunta', ['create'], ['class' => 'btn btn-success']) ?>
+                <?php endif ?>
+            <?php endif ?>
+        </h1>
     </div>
     <?php #echo $this->render('_search', ['model' => $searchModel]); ?>
-    <?php if (!Yii::$app->user->isGuest): ?>
-        <p>
-            <?= Html::a('Nueva Pregunta', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
-    <?php endif ?>
     <div class="row text-center">
         <?= ListView::widget([
             'dataProvider' => $dataProvider,

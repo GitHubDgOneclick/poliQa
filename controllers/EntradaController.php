@@ -259,6 +259,29 @@ class EntradaController extends Controller
         $mAprobacion = Aprobaciones::findOne( $id );
         $mAprobacion->estado = Aprobaciones::ESTADO_APROVADO;
         $mAprobacion->save();
+        $bPublicarPregunta = true;
+        $mEntrada = null;
+        if ( isset( $mAprobacion->entrada0 ) ) {
+            $mEntrada = $mAprobacion->entrada0;
+            if ( isset( $mEntrada->aprobaciones ) && count( $mEntrada->aprobaciones ) > 0 ) {
+                foreach ( $mEntrada->aprobaciones as $key => $aprobacion ) {
+                    if (  $aprobacion->estado == Aprobaciones::ESTADO_APROVADO ) {
+                    } else if ( $aprobacion->codigo == $mAprobacion->codigo ) {
+                    } else if ( $aprobacion->estado == Aprobaciones::ESTADO_NO_APROVADO ) {
+                        $bPublicarPregunta = false;
+                    }
+                }
+            }
+        }
+        if ( $bPublicarPregunta ) {
+            $mEntrada->estado = Entrada::ESTADO_ACTIVO;
+            $mEntrada->categorias = 'xxx';
+            $mEntrada->palabrasClave = 'xxx';
+            $mEntrada->cadenaAprobacion = 'xxx';
+            if ( !$mEntrada->save() ) {
+                AppHandlingErrors::setFlash( 'danger' , json_encode( $mEntrada->getErrors() ) );
+            }
+        }
         return $this->redirect(['view', 'id' => $mAprobacion->entrada ]);
     }
 
@@ -273,6 +296,17 @@ class EntradaController extends Controller
         $mAprobacion = Aprobaciones::findOne( $id );
         $mAprobacion->estado = Aprobaciones::ESTADO_NO_APROVADO;
         $mAprobacion->save();
+        $mEntrada = null;
+        if ( isset( $mAprobacion->entrada0 ) ) {
+            $mEntrada = $mAprobacion->entrada0;
+            $mEntrada->estado = Entrada::ESTADO_INACTIVO;
+            $mEntrada->categorias = 'xxx';
+            $mEntrada->palabrasClave = 'xxx';
+            $mEntrada->cadenaAprobacion = 'xxx';
+            if ( !$mEntrada->save() ) {
+                AppHandlingErrors::setFlash( 'danger' , json_encode( $mEntrada->getErrors() ) );
+            }
+        }
         return $this->redirect(['view', 'id' => $mAprobacion->entrada ]);
     }
 
