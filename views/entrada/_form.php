@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use app\models\cadenaAprobacionSearch; 
+use app\models\CadenaAprobacionSearch; 
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use vova07\imperavi\Widget;
@@ -68,7 +68,7 @@ use vova07\imperavi\Widget;
         ]) ?>
         <?= $form->field($model, 'categorias')->textInput() ?>
         <?= $form->field($model, 'palabrasClave')->textInput() ?>
-        <?= $form->field($model, 'cadenaAprobacion')->dropDownList(ArrayHelper::map(cadenaAprobacionSearch::all(), 'codigo', 'nombre'),['prompt'=>'Seleccione un rol']) ?>
+        <?= $form->field($model, 'cadenaAprobacion')->dropDownList(ArrayHelper::map(CadenaAprobacionSearch::all(), 'codigo', 'nombre'),['prompt'=>'Seleccione un rol']) ?>
 
         <?= $form->field($model, 'estado')->textInput([ 'type' => 'hidden' ])->label( false ) ?>
         <?= $form->field($model, 'tipo')->textInput([ 'type' => 'hidden' ])->label( false ) ?>
