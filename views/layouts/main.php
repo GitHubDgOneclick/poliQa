@@ -43,7 +43,7 @@ AppAsset::register($this);
                 ?>
                 <?php
                 NavBar::begin([
-                    'brandLabel' => 'PoliQua',
+                    'brandLabel' => 'PoliQa',
                     'brandUrl' => Yii::$app->homeUrl,
                     'options' => [
                         'class' => 'navbar navbar-default',
