@@ -53,32 +53,34 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $model->respuesta ?>
         </p>        
     </div>
-    <div style="padding:15px;">
-        <div class="row">
-            <div class="page-header">
-                <h3>Comentarios</h3>
-            </div>
-            <?php if ( isset( $model->entradas ) && count( $model->entradas ) > 0  ): ?>
-                <?php foreach ($model->entradas as $key => $comentario): ?>
-                    <div class="col-xs-8 col-xs-offset-2 "> 
-                        <?php echo $this->render('_item_comment', ['model' => $comentario]); ?>
-                    </div>
-                <?php endforeach ?>
-            <?php else: ?>
-                <div class="col-xs-6 col-xs-offset-6 "> 
-                    <p>No se encontraron comentarios</p>
+    <?php if (!Yii::$app->user->isGuest): ?>
+        <div style="padding:15px;">
+            <div class="row">
+                <div class="page-header">
+                    <h3>Comentarios</h3>
                 </div>
-            <?php endif ?>
-        </div>
-        <div class="row"> 
-            <div class="page-header">
-                <h3>Nuevo Comentario</h3>
+                <?php if ( isset( $model->entradas ) && count( $model->entradas ) > 0  ): ?>
+                    <?php foreach ($model->entradas as $key => $comentario): ?>
+                        <div class="col-xs-8 col-xs-offset-2 "> 
+                            <?php echo $this->render('_item_comment', ['model' => $comentario]); ?>
+                        </div>
+                    <?php endforeach ?>
+                <?php else: ?>
+                    <div class="col-xs-6 col-xs-offset-6 "> 
+                        <p>No se encontraron comentarios</p>
+                    </div>
+                <?php endif ?>
             </div>
-            <?php 
-                $mComentario->entrada = $model->codigo; 
-                echo $this->render('_comment', ['model' => $mComentario]); 
-            ?>
-        </div>
-    </div>
+            <div class="row"> 
+                <div class="page-header">
+                    <h3>Nuevo Comentario</h3>
+                </div>
+                <?php 
+                    $mComentario->entrada = $model->codigo; 
+                    echo $this->render('_comment', ['model' => $mComentario]); 
+                ?>
+            </div>
+        </div>        
+    <?php endif ?>
 
 </div>
