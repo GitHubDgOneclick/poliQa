@@ -95,21 +95,23 @@ class EntradaController extends Controller
     public function actionView($id , $titulo = null , $comentario = null )
     {
         $mComentario = new Entrada();
-        $mComentario->estado = Entrada::ESTADO_ACTIVO;
-        $mComentario->tipo = Entrada::TIPO_COMENTARIO;
-        $mComentario->usuario = Yii::$app->user->identity->codigo;
-        $mComentario->pregunta = 'lorem';
-        $mComentario->descripcion_listado = 'lorem';
-        $mComentario->fecha_inicial =  AppDate::date();
-        $mComentario->fecha_final = AppDate::date();
-        $mComentario->categorias = 'comentario';
-        $mComentario->palabrasClave = 'comentario';
-        $mComentario->cadenaAprobacion = 1;
-        if ($titulo != null) {
-            $mComentario->titulo_listado = $titulo;
-        }
-        if ($comentario != null) {
-            $mComentario->respuesta = $comentario;
+        if (!Yii::$app->user->isGuest){
+            $mComentario->estado = Entrada::ESTADO_ACTIVO;
+            $mComentario->tipo = Entrada::TIPO_COMENTARIO;
+            $mComentario->usuario = Yii::$app->user->identity->codigo;
+            $mComentario->pregunta = 'lorem';
+            $mComentario->descripcion_listado = 'lorem';
+            $mComentario->fecha_inicial =  AppDate::date();
+            $mComentario->fecha_final = AppDate::date();
+            $mComentario->categorias = 'comentario';
+            $mComentario->palabrasClave = 'comentario';
+            $mComentario->cadenaAprobacion = 1;
+            if ($titulo != null) {
+                $mComentario->titulo_listado = $titulo;
+            }
+            if ($comentario != null) {
+                $mComentario->respuesta = $comentario;
+            }
         }
 
         return $this->render('view', [
