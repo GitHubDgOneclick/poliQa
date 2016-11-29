@@ -32,7 +32,7 @@ use vova07\imperavi\Widget;
         <?= $form->field($model, 'cadenaAprobacion')->textInput(['type' => 'hidden'])->label(false) ?>
         <?= $form->field($model, 'entrada')->textInput(['type' => 'hidden'])->label(false) ?>
     <div class="form-group">
-        <?= Html::submitButton( '<i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar Datos' , ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton( '<i class="fa fa-floppy-o" aria-hidden="true"></i> Comentar' , ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
