@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use app\models\Entrada;
 
 /**
@@ -12,6 +13,8 @@ use app\models\Entrada;
  */
 class EntradaSearch extends Entrada
 {
+    public $categorias;
+    public $palabrasClave;
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class EntradaSearch extends Entrada
     {
         return [
             [['codigo', 'estado', 'tipo', 'usuario', 'entrada'], 'integer'],
-            [['titulo_listado', 'descripcion_listado', 'pregunta', 'respuesta', 'fecha_inicial', 'fecha_final'], 'safe'],
+            [['titulo_listado', 'descripcion_listado', 'pregunta', 'respuesta', 'fecha_inicial', 'fecha_final' , 'categorias', 'palabrasClave'], 'safe'],
         ];
     }
 
@@ -41,7 +44,8 @@ class EntradaSearch extends Entrada
      */
     public function search($params)
     {
-        $query = Entrada::find();
+
+        $query = Entrada::find()->joinWith('etiquetaEntradas');
 
         // add conditions that should always apply here
 
@@ -73,6 +77,24 @@ class EntradaSearch extends Entrada
            ->andFilterWhere(['like', 'pregunta', $this->pregunta])
            ->andFilterWhere(['like', 'respuesta', $this->respuesta]);
 
+        if ( isset( $this->categorias ) && trim( $this->categorias ) != '' ) {
+            $categorias = array_unique( array_map('trim', explode( ',' , strtoupper( $this->categorias ) ) ) );
+            $arrayCategorias = ArrayHelper::map( Etiqueta::find()
+                ->where([ 'tipo' => Etiqueta::TIPO_CATEGORIA ])
+                ->andWhere([ 'IN', 'valor', $categorias ])
+                ->all() 
+            , 'codigo', 'codigo') ;
+            $query->andWhere( ['IN', 'etiqueta_entrada.etiqueta', $arrayCategorias ]);
+        }
+        if ( isset( $this->palabrasClave ) && trim( $this->palabrasClave ) != '' ) {
+            $palabrasClave = array_unique( array_map('trim', explode( ',' , strtoupper( $this->palabrasClave ) ) ) );
+            $arrayPalabrasClave = ArrayHelper::map( Etiqueta::find()
+                ->where([ 'tipo' => Etiqueta::TIPO_PALABRA_CLAVE ])
+                ->andWhere([ 'IN', 'valor', $palabrasClave ])
+                ->all() 
+            , 'codigo', 'codigo') ;
+            $query->andWhere( ['IN', 'etiqueta_entrada.etiqueta', $arrayPalabrasClave ]);
+        }
         return $dataProvider;
     }
 }

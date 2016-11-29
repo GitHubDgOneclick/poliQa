@@ -9,10 +9,7 @@ use yii\widgets\ListView;
 
 $this->title = 'inicio';
 ?>
-<div class="row bg-op padding-15">
-    <div class="page-header">
-        <h1><?= Html::encode($this->title) ?>
-    </div>
+<div class="row bg-op padding-15">
     <div class="row text-center">
         <div class="col-xs-4 col-xs-offset-1">
             <div class="panel panel-default">

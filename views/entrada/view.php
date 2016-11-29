@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\Aprobaciones;
 use app\models\Rol;
+use app\models\Entrada;
 /* @var $this yii\web\View */
 /* @var $model app\models\Entrada */
 
@@ -42,11 +43,42 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endif ?>
         <?php endif ?>
     </p>
-    <p>
-        <?= $model->pregunta ?>
-    </p>
-    <div>
-        <?= $model->respuesta ?>
+    <div style="padding:15px;">
+        <p>
+            <?= $model->pregunta ?>
+        </p>
+    </div>
+    <div style="padding:30px;">
+        <p>
+            <?= $model->respuesta ?>
+        </p>        
+    </div>
+    <div style="padding:15px;">
+        <div class="row">
+            <div class="page-header">
+                <h3>Comentarios</h3>
+            </div>
+            <?php if ( isset( $model->entradas ) && count( $model->entradas ) > 0  ): ?>
+                <?php foreach ($model->entradas as $key => $comentario): ?>
+                    <div class="col-xs-8 col-xs-offset-2 "> 
+                        <?php echo $this->render('_item_comment', ['model' => $comentario]); ?>
+                    </div>
+                <?php endforeach ?>
+            <?php else: ?>
+                <div class="col-xs-6 col-xs-offset-6 "> 
+                    <p>No se encontraron comentarios</p>
+                </div>
+            <?php endif ?>
+        </div>
+        <div class="row"> 
+            <div class="page-header">
+                <h3>Nuevo Comentario</h3>
+            </div>
+            <?php 
+                $mComentario->entrada = $model->codigo; 
+                echo $this->render('_comment', ['model' => $mComentario]); 
+            ?>
+        </div>
     </div>
 
 </div>

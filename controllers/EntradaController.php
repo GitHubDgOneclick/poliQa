@@ -15,6 +15,7 @@ use app\models\EtiquetaEntrada;
 use app\models\CadenaAprobacion;
 use app\models\Aprobaciones;
 use vova07\imperavi\actions\GetAction;
+use app\assets\AppDate;
 
 /**
  * EntradaController implements the CRUD actions for Entrada model.
@@ -80,7 +81,6 @@ class EntradaController extends Controller
     {
         $searchModel = new EntradaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -92,10 +92,29 @@ class EntradaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id , $titulo = null , $comentario = null )
     {
+        $mComentario = new Entrada();
+        $mComentario->estado = Entrada::ESTADO_ACTIVO;
+        $mComentario->tipo = Entrada::TIPO_COMENTARIO;
+        $mComentario->usuario = Yii::$app->user->identity->codigo;
+        $mComentario->pregunta = 'lorem';
+        $mComentario->descripcion_listado = 'lorem';
+        $mComentario->fecha_inicial =  AppDate::date();
+        $mComentario->fecha_final = AppDate::date();
+        $mComentario->categorias = 'comentario';
+        $mComentario->palabrasClave = 'comentario';
+        $mComentario->cadenaAprobacion = 1;
+        if ($titulo != null) {
+            $mComentario->titulo_listado = $titulo;
+        }
+        if ($comentario != null) {
+            $mComentario->respuesta = $comentario;
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'mComentario' => $mComentario,
         ]);
     }
 
@@ -142,6 +161,20 @@ class EntradaController extends Controller
         } catch (Exception $e) {
             $transaction->rollBack();
             AppHandlingErrors::setFlash( 'danger' ,  $e->message );
+        }
+    }
+
+    public function actionComment()
+    {
+        $model = new Entrada();
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            AppHandlingErrors::setFlash( 'success' ,  'Gracias por comentar' );
+            return $this->redirect( [ 'view', 'id' => $model->entrada ] );
+        } else {
+
+            AppHandlingErrors::setFlash( 'danger' ,  'Problemas para comentar, Intentalo mas tarde.' );
+            AppHandlingErrors::setFlash( 'warning' ,  json_encode( $model->getErrors() )  );
+            return $this->redirect( [ 'view', 'id' => $model->entrada, 'titulo' => $model->titulo_listado , 'comentario'=> $model->descripcion_listado ] );
         }
     }
 

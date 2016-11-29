@@ -43,16 +43,23 @@ AppAsset::register($this);
                 ?>
                 <?php
                 NavBar::begin([
-                    'brandLabel' => 'PoliQa',
+                    'brandLabel' => Html::img('@web/img/Logo-poli.png', ['alt'=> 'PoliQa', 'style'=>'width: 45px;top: -14px;position: relative;' ]),
                     'brandUrl' => Yii::$app->homeUrl,
                     'options' => [
                         'class' => 'navbar navbar-default',
                     ],
                 ]);
                 echo Nav::widget([
+                    'options' => ['class' => 'navbar-nav navbar-left'],
+                    'items' => [
+                        '<li class="">'.
+                            '<h3 style="margin-top: 12px;">Politecnico Gran Colombiano - PoliQa</h3>'.
+                        '</li>'
+                    ],
+                ]);
+                echo Nav::widget([
                     'options' => ['class' => 'navbar-nav navbar-right'],
                     'items' => [
-                        
                         Yii::$app->user->isGuest ? (
                             ['label' => 'Login', 'url' => ['/usuario/login']]
                         ) : (

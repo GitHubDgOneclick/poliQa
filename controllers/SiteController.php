@@ -64,6 +64,7 @@ class SiteController extends Controller
     {
         $searchModel = new EntradaSearch();
         $searchModel->estado = Entrada::ESTADO_ACTIVO;
+        $searchModel->tipo = Entrada::TIPO_PREGUNTA;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
