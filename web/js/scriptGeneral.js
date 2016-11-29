@@ -35,12 +35,13 @@ $(function () {
 function limiparFiltros( elemento ) {
     var form = $(elemento).parent().parent('form');
     var inputs = $(form).find('input');
+    console.log( inputs );
     var selects = $(form).find('select');
     $( inputs ).each(function( index ) {
-        $(this).val('');
+        $(this).attr( 'value' , '' );
     });
     $( selects ).each(function( index ) {
-       $(this).val(0); 
+       $(this).attr( 'value' , '' ); 
     });
     $( form ).trigger('submit');
 }
