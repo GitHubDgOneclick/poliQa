@@ -53,7 +53,7 @@ AppAsset::register($this);
                     'options' => ['class' => 'navbar-nav navbar-left'],
                     'items' => [
                         '<li class="">'.
-                            '<h3 style="margin-top: 12px;">Politecnico Gran Colombiano - PoliQa</h3>'.
+                            '<h3 style="margin-top: 12px;">PoliQa</h3>'.
                         '</li>'
                     ],
                 ]);
