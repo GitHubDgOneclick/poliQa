@@ -8,7 +8,8 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\EslabonAprobacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Eslabones de aprobacion';
+$this->title = 'Etapas de aprobacion';
+$this->params['breadcrumbs'][] = ['label' => "Check's de aprobacion", 'url' => ['/cadena-aprobacion/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row bg-op padding-15">

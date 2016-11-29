@@ -7,7 +7,7 @@ use app\models\CadenaAprobacion;
 /* @var $searchModel app\models\CadenaAprobacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cadena Aprobacions';
+$this->title = "Check's de aprobacion";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row bg-op">
