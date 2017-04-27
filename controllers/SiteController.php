@@ -10,6 +10,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\EntradaSearch;
 use app\models\Entrada;
+use app\assets\AppDate;
 
 class SiteController extends Controller
 {
@@ -19,17 +20,6 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -65,6 +55,8 @@ class SiteController extends Controller
         $searchModel = new EntradaSearch();
         $searchModel->estado = Entrada::ESTADO_ACTIVO;
         $searchModel->tipo = Entrada::TIPO_PREGUNTA;
+        $searchModel->fecha_inicial = AppDate::date();
+        $searchModel->fecha_final = AppDate::date();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

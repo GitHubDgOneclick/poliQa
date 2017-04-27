@@ -10,6 +10,8 @@ use app\models\LoginForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\assets\AppAccessRule;
+use yii\filters\AccessControl;
 
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
@@ -28,6 +30,25 @@ class UsuarioController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AppAccessRule::className(),
+                ],
+                'only' => ['index','view','create','update','delete','change-editor','change-user','login','logout'],
+                'rules' => [
+                    [
+                        'actions' => ['index','view','create','update','delete','change-editor','change-user'],
+                        'allow' => true,
+                        'roles' => ["?"],
+                    ],
+                    [
+                        'actions' => ['login','logout'],
+                        'allow' => true,
+                        'roles' => ["@"],
+                    ]
+                ]
+            ]
         ];
     }
 

@@ -16,6 +16,8 @@ use app\models\CadenaAprobacion;
 use app\models\Aprobaciones;
 use vova07\imperavi\actions\GetAction;
 use app\assets\AppDate;
+use app\assets\AppAccessRule;
+use yii\filters\AccessControl;
 
 /**
  * EntradaController implements the CRUD actions for Entrada model.
@@ -31,27 +33,27 @@ class EntradaController extends Controller
             'images-get' => [
                 'class' => 'vova07\imperavi\actions\GetAction',
                 #'url' => 'http://localhost:81/PoliQa/poliQa/web/img/', // Directory URL address, where files are stored.
-                'url' => 'http://ec2-54-172-245-23.compute-1.amazonaws.com/img/', // Directory URL address, where files are stored.
+                'url' => Yii::getAlias('@pathUrlAplication').'/img/', // Directory URL address, where files are stored.
                 'path' => '@pathImagenes', // Or absolute path to directory where files are stored.
                 'type' => GetAction::TYPE_IMAGES,
             ],
             'files-get' => [
                 'class' => 'vova07\imperavi\actions\GetAction',
                 #'url' => 'http://localhost:81/PoliQa/poliQa/web/files/', // Directory URL address, where files are stored.
-                'url' => 'http://ec2-54-172-245-23.compute-1.amazonaws.com/files/', // Directory URL address, where files are stored.
+                'url' => Yii::getAlias('@pathUrlAplication').'/files/', // Directory URL address, where files are stored.
                 'path' => '@pathArchivos', // Or absolute path to directory where files are stored.
                 'type' => GetAction::TYPE_FILES,
             ],
             'image-upload' => [
                 'class' => 'vova07\imperavi\actions\UploadAction',
                 #'url' => 'http://localhost:81/PoliQa/poliQa/web/img/', // Directory URL address, where files are stored.
-                'url' => 'http://ec2-54-172-245-23.compute-1.amazonaws.com/img/', // Directory URL address, where files are stored.
+                'url' => Yii::getAlias('@pathUrlAplication').'/img/', // Directory URL address, where files are stored.
                 'path' => '@pathImagenes', // Or absolute path to directory where files are stored.
             ],
             'file-upload' => [
                 'class' => 'vova07\imperavi\actions\UploadAction',
                 #'url' => 'http://localhost:81/PoliQa/poliQa/web/files/', // Directory URL address, where files are stored.
-                'url' => 'http://ec2-54-172-245-23.compute-1.amazonaws.com/files/', // Directory URL address, where files are stored.
+                'url' => Yii::getAlias('@pathUrlAplication').'/files/', // Directory URL address, where files are stored.
                 'path' => '@pathArchivos', // Or absolute path to directory where files are stored.
                 'uploadOnlyImage' => false, // For not image-only uploading.
             ],
@@ -70,6 +72,25 @@ class EntradaController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AppAccessRule::className(),
+                ],
+                'only' => ['index','view','create','comment','update','delete','approvelink','disapprovelink'],
+                'rules' => [
+                    [
+                        'actions' => ['index','create','comment','update','delete','approvelink','disapprovelink'],
+                        'allow' => true,
+                        'roles' => ["?"],
+                    ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => ["@"],
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -80,6 +101,8 @@ class EntradaController extends Controller
     public function actionIndex()
     {
         $searchModel = new EntradaSearch();
+        #$searchModel->fecha_inicial = AppDate::date();
+        #$searchModel->fecha_final = AppDate::date();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,

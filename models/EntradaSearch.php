@@ -64,13 +64,20 @@ class EntradaSearch extends Entrada
         // grid filtering conditions
         $query->andFilterWhere([
             'codigo' => $this->codigo,
-            'fecha_inicial' => $this->fecha_inicial,
-            'fecha_final' => $this->fecha_final,
+            #'fecha_inicial' => $this->fecha_inicial,
+            #'fecha_final' => $this->fecha_final,
             'estado' => $this->estado,
             'tipo' => $this->tipo,
             'usuario' => $this->usuario,
             'entrada' => $this->entrada,
         ]);
+
+        if ( isset( $this->fecha_inicial ) && trim( $this->fecha_inicial ) != '' ) {
+            $query->andFilterWhere(['<=', 'fecha_inicial', $this->fecha_inicial]);
+        }
+        if ( isset( $this->fecha_final ) && trim( $this->fecha_final ) != '' ) {
+            $query->andFilterWhere(['>=', 'fecha_final', $this->fecha_final]);
+        }
 
         $query->andFilterWhere(['like', 'titulo_listado', $this->titulo_listado])
            ->andFilterWhere(['like', 'descripcion_listado', $this->descripcion_listado])

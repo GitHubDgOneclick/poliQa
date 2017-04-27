@@ -8,6 +8,8 @@ use app\models\EslabonAprobacionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\assets\AppAccessRule;
+use yii\filters\AccessControl;
 
 /**
  * EslabonAprobacionController implements the CRUD actions for EslabonAprobacion model.
@@ -26,6 +28,21 @@ class EslabonAprobacionController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AppAccessRule::className(),
+                ],
+                'only' => ['index','view','create','update','delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index','view','create','update','delete'],
+                        'allow' => true,
+                        'roles' => ["?"],
+                    ]
+                ]
+            ]
+            
         ];
     }
 

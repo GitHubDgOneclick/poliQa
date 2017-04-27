@@ -8,6 +8,8 @@ use app\models\CadenaAprobacionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\assets\AppAccessRule;
+use yii\filters\AccessControl;
 
 /**
  * CadenaAprobacionController implements the CRUD actions for CadenaAprobacion model.
@@ -26,6 +28,20 @@ class CadenaAprobacionController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AppAccessRule::className(),
+                ],
+                'only' => [ 'index' , 'view' , 'create' , 'update' , 'change-active' , 'change-no-active' , 'delete' ],
+                'rules' => [
+                    [
+                        'actions' => ['index','view','create','update','change-active','change-no-active','delete'],
+                        'allow' => true,
+                        'roles' => ["?"],
+                    ]
+                ]
+            ]
         ];
     }
 

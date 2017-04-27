@@ -86,6 +86,8 @@ AppAsset::register($this);
                         <div class="alert alert-<?= $key ?>" role="alert"><?= $message ?></div>
                     <?php endforeach ?>
                 </div>
+            </div>
+            <div class="row bg-op">
                 <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ]) ?>
