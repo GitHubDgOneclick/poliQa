@@ -45,9 +45,9 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
         'ldap' => require(__DIR__ . '/ldap.php'),
         'urlManager' => [
-            'class' => 'yii\web\UrlManager',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
+           #'class' => 'yii\web\UrlManager',
+           #'enablePrettyUrl' => true,
+            #'showScriptName' => false,
         ],
         'formatter' => [
             'dateFormat' => 'dd.MM.yyyy',
