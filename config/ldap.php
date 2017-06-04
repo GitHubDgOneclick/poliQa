@@ -6,9 +6,9 @@ return [
 	        'ad_port'      => 389,
 	        'domain_controllers'    => array( '127.0.0.1', '127.0.0.1' ),
 	        'account_suffix' =>  '',
-	        'base_dn' => "DC=poli,DC=edu,DC=co",
+	        'base_dn' => "dc=poli,dc=edu,dc=co",
 	        // for basic functionality this could be a standard, non privileged domain user (required)
-	        'admin_username' => 'admin',
+	        'admin_username' => 'cn=admin,dc=poli,dc=edu,dc=co',
 	        'admin_password' => 'ldapQapassw0rd'
 	    ],
 	    //Connect on Adldap instance creation (default). If you don't want to set password via main.php you can
