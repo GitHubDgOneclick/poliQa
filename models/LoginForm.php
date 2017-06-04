@@ -69,7 +69,7 @@ class LoginForm extends Model
      */
     public function login()
     {
-        $usuarioLdap = \Yii::$app->ad->search()->findBy( Yii::$app->params['codigo'] , $this->username );
+        $usuarioLdap = Yii::$app->ldap->search()->findBy( Yii::$app->params['codigo'] , $this->username );
         if ( $usuarioLdap != null ) {
             if ( Yii::$app->ldap->auth()->attempt( $this->username , $this->password ) ) {
                 
