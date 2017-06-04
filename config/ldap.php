@@ -5,7 +5,7 @@ return [
 	'options'=> [
 	        'ad_port'      => 389,
 	        'domain_controllers'    => array( '127.0.0.1', '127.0.0.1' ),
-	        'account_suffix' =>  '@poli.edu.co',
+	        'account_suffix' =>  '',
 	        'base_dn' => "DC=poli,DC=edu,DC=co",
 	        // for basic functionality this could be a standard, non privileged domain user (required)
 	        'admin_username' => 'admin',
