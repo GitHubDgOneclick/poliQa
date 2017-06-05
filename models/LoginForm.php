@@ -89,7 +89,7 @@ class LoginForm extends Model
                 echo "<br\>";
                 $usuario->nombre = $usuarioLdap[ Yii::$app->params['nombre'] ][0];
                 echo "//////////-*";
-                print_r($usuarioLdap[ Yii::$app->params['nombre'] ]);
+                print_r($usuarioLdap->mail);
                 echo "*-/////////////";
                 $usuario->apellido = $usuarioLdap[ Yii::$app->params['apellido'] ][0];
                 $usuario->email = $usuarioLdap[ Yii::$app->params['email'] ][0];
