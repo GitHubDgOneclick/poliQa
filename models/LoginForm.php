@@ -90,8 +90,11 @@ class LoginForm extends Model
                 $usuario->usuario = $this->username;
                 $usuario->contrasena = $this->password;
                 print_r($usuario);
-                if ( !$usuario->save() ) {
-                    AppHandlingErrors::setFlash( 'danger' , 'Error guardando dato' );    
+                if ( $usuario->save() ) {
+                    
+                } else {
+                    print_r($usuario->errors)
+                    AppHandlingErrors::setFlash( 'danger' , 'Error guardando dato' );
                 }
                 $this->_user = $usuario;
                 return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
