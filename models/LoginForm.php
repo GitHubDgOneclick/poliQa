@@ -81,6 +81,7 @@ class LoginForm extends Model
                 $usuario = Usuario::findByUsername($this->username);
                 if ($usuario == null) {
                     $usuario = new Usuario; 
+                    $usuario->rol = Rol::ROL_USUARIO;
                 }
 
                 $usuario->nombre = $usuarioLdap[ Yii::$app->params['nombre'] ];
@@ -88,9 +89,9 @@ class LoginForm extends Model
                 $usuario->email = $usuarioLdap[ Yii::$app->params['email'] ];
                 $usuario->usuario = $this->username;
                 $usuario->contrasena = $this->password;
-                $usuario->rol = Rol::ROL_USUARIO;
-                $usuario->save();
-                
+                if ( !$usuario->save() ) {
+                    AppHandlingErrors::setFlash( 'danger' , 'Error guardando dato' );    
+                }
                 $this->_user = $usuario;
                 return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
             } else {
