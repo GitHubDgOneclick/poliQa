@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php endif ?>
                     <?php endif ?>
                 <?php endforeach ?>
-                <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar', ['Eliminar', 'id' => $model->codigo], [
+                <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar', ['delete', 'id' => $model->codigo], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => 'Are you sure you want to delete this item?',
