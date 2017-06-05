@@ -34,8 +34,8 @@ use vova07\imperavi\Widget;
             'autoclose' => true,
         ]
     ]) ?>
-    <?= $form->field($model, 'categorias')->textInput(['placeholder' => "Categorias"])->label(false ?>
-    <?= $form->field($model, 'palabrasClave')->textInput(['placeholder' => "Palabras Clave"])->label(false ?>
+    <?= $form->field($model, 'categorias')->textInput(['placeholder' => "Categorias"])->label(false) ?>
+    <?= $form->field($model, 'palabrasClave')->textInput(['placeholder' => "Palabras Clave"])->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
