@@ -89,6 +89,7 @@ class LoginForm extends Model
                 $this->_user = $usuario;
                 return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
             } else {
+                AppHandlingErrors::setFlash( 'danger' , 'Contraseña no valida' );
                 return false;
             }
         } else {
