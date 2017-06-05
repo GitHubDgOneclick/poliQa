@@ -68,7 +68,7 @@ use vova07\imperavi\Widget;
         ]) ?>
         <?= $form->field($model, 'categorias')->textInput() ?>
         <?= $form->field($model, 'palabrasClave')->textInput() ?>
-        <?= $form->field($model, 'cadenaAprobacion')->dropDownList(ArrayHelper::map(CadenaAprobacionSearch::all(), 'codigo', 'nombre'),['prompt'=>'Seleccione un rol']) ?>
+        <?= $form->field($model, 'cadenaAprobacion')->dropDownList(ArrayHelper::map(CadenaAprobacionSearch::all(), 'codigo', 'nombre'),['prompt'=>'Seleccione la cadena a asignar']) ?>
 
         <?= $form->field($model, 'estado')->textInput([ 'type' => 'hidden' ])->label( false ) ?>
         <?= $form->field($model, 'tipo')->textInput([ 'type' => 'hidden' ])->label( false ) ?>

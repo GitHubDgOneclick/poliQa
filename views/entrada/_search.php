@@ -15,23 +15,25 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'codigo') ?>
-
-    <?= $form->field($model, 'pregunta') ?>
-
-    <?= $form->field($model, 'respuesta') ?>
-
-    <?= $form->field($model, 'fecha_inicial') ?>
-
-    <?= $form->field($model, 'fecha_final') ?>
-
-    <?php // echo $form->field($model, 'estado') ?>
-
-    <?php // echo $form->field($model, 'tipo') ?>
-
-    <?php // echo $form->field($model, 'usuario') ?>
-
-    <?php // echo $form->field($model, 'entrada') ?>
+    <?= $form->field($model, 'titulo_listado')->textInput() ?>
+    <?= $form->field($model, 'descripcion_listado')->textArea(['rows' => '6']) ?>
+    <label class="control-label">Valides</label>
+    <?= DatePicker::widget([
+        'model' => $model,
+        'attribute' => 'fecha_inicial',
+        'attribute2' => 'fecha_final',
+        'options' => ['placeholder' => 'Fecha de inicio'],
+        'options2' => ['placeholder' => 'Fecha de Fin'],
+        'type' => DatePicker::TYPE_RANGE,
+        'form' => $form,
+        'pluginOptions' => [
+            'format' => 'yyyy-mm-dd',
+            'autoclose' => true,
+        ]
+    ]) ?>
+    <?= $form->field($model, 'categorias')->textInput() ?>
+    <?= $form->field($model, 'palabrasClave')->textInput() ?>
+    <?= $form->field($model, 'cadenaAprobacion')->dropDownList(ArrayHelper::map(CadenaAprobacionSearch::all(), 'codigo', 'nombre'),['prompt'=>'Seleccione la cadena a asignar']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
