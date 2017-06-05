@@ -2,7 +2,7 @@
 
 return [
     'adminEmail' => 'admin@example.com',
-    'nombre' => 'givenName',
+    'nombre' => 'givenname',
     'apellido' => 'sn',
     'email' => 'mail',
     'codigo' => 'uid',

@@ -83,14 +83,7 @@ class LoginForm extends Model
                     $usuario = new Usuario; 
                     $usuario->rol = Rol::ROL_USUARIO;
                 }
-                print_r($usuarioLdap);
-                echo "<br\>";
-                echo "--------------";
-                echo "<br\>";
                 $usuario->nombre = $usuarioLdap[ Yii::$app->params['nombre'] ][0];
-                echo "//////////-*";
-                print_r($usuarioLdap[ Yii::$app->params['email'] ][0]);
-                echo "*-/////////////";
                 $usuario->apellido = $usuarioLdap[ Yii::$app->params['apellido'] ][0];
                 $usuario->email = $usuarioLdap[ Yii::$app->params['email'] ][0];
                 $usuario->usuario = $this->username;
