@@ -4,7 +4,7 @@ $params = require(__DIR__ . '/params.php');
 Yii::setAlias('@pathImagenes', __DIR__ . '/../web/img/');
 Yii::setAlias('@pathArchivos', __DIR__ . '/../web/files/');
 #Yii::setAlias('@pathUrlAplication', 'http://ec2-54-172-245-23.compute-1.amazonaws.com');
-Yii::setAlias('@pathUrlAplication', 'http://localhost/poliQa/poliQa/web');
+Yii::setAlias('@pathUrlAplication', 'http://localhost:8181/poliQa/web/');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
