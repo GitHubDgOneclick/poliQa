@@ -22,8 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </h1>
     </div>
     <div class="row text-center">
-        <br />
+
         <div class="col-xs-4 ">
+            <br />
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="page-header">
@@ -34,6 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
                 </div>
             </div>
+            <br />
+            <br />
         </div>
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
