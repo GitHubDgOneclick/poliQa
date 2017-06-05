@@ -25,6 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-6 ">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <div class="page-header">
+                        <h4>Filtros</h4>
+                        <small>
+                        </small> 
+                    </div>
                     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
                 </div>
             </div>
