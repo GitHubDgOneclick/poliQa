@@ -19,9 +19,8 @@ use vova07\imperavi\Widget;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'titulo_listado')->textInput() ?>
-    <?= $form->field($model, 'descripcion_listado')->textArea(['rows' => '6']) ?>
-    <label class="control-label">Valides</label>
+    <?= $form->field($model, 'titulo_listado')->textInput(['placeholder' => "Titulo"])->label(false) ?>
+    <?= $form->field($model, 'descripcion_listado')->textInput(['placeholder' => "Descripcion"])->label(false) ?>
     <?= DatePicker::widget([
         'model' => $model,
         'attribute' => 'fecha_inicial',
@@ -35,9 +34,8 @@ use vova07\imperavi\Widget;
             'autoclose' => true,
         ]
     ]) ?>
-    <?= $form->field($model, 'categorias')->textInput() ?>
-    <?= $form->field($model, 'palabrasClave')->textInput() ?>
-    <?= $form->field($model, 'cadenaAprobacion')->dropDownList(ArrayHelper::map(CadenaAprobacionSearch::all(), 'codigo', 'nombre'),['prompt'=>'Seleccione la cadena a asignar']) ?>
+    <?= $form->field($model, 'categorias')->textInput(['placeholder' => "Categorias"])->label(false ?>
+    <?= $form->field($model, 'palabrasClave')->textInput(['placeholder' => "Palabras Clave"])->label(false ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
