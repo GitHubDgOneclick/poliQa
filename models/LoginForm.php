@@ -93,7 +93,7 @@ class LoginForm extends Model
                 if ( $usuario->save() ) {
                     
                 } else {
-                    print_r($usuario->errors)
+                    print_r($usuario->errors);
                     AppHandlingErrors::setFlash( 'danger' , 'Error guardando dato' );
                 }
                 $this->_user = $usuario;
