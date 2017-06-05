@@ -24,7 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row text-center">
         <div class="col-xs-6 ">
             <div class="panel panel-default">
-                <?php #echo $this->render('_search', ['model' => $searchModel]); ?>
+                <div class="panel-body">
+                    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+                </div>
             </div>
         </div>
         <?= ListView::widget([
