@@ -84,11 +84,12 @@ class LoginForm extends Model
                     $usuario->rol = Rol::ROL_USUARIO;
                 }
 
-                $usuario->nombre = $usuarioLdap[ Yii::$app->params['nombre'] ];
-                $usuario->apellido = $usuarioLdap[ Yii::$app->params['apellido'] ];
-                $usuario->email = $usuarioLdap[ Yii::$app->params['email'] ];
+                $usuario->nombre = $usuarioLdap[ Yii::$app->params['nombre'] ][0];
+                $usuario->apellido = $usuarioLdap[ Yii::$app->params['apellido'] ][0];
+                $usuario->email = $usuarioLdap[ Yii::$app->params['email'] ][0];
                 $usuario->usuario = $this->username;
                 $usuario->contrasena = $this->password;
+                print_r($usuario);
                 if ( !$usuario->save() ) {
                     AppHandlingErrors::setFlash( 'danger' , 'Error guardando dato' );    
                 }
