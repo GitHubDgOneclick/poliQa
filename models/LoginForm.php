@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\models\UsersSearch;
 use app\assets\AppHandlingErrors;
+use Adldap\Exceptions\AdldapException;
 
 /**
  * LoginForm is the model behind the login form.
@@ -104,7 +105,7 @@ class LoginForm extends Model
                 AppHandlingErrors::setFlash( 'danger' , 'El usuario no existe' );
                 return false;
             }
-        } catch (Exception $e) {
+        } catch ( AdldapException $e) {
             AppHandlingErrors::setFlash( 'danger' , 'usuario o contraseña invalidos' );
             return false;
         }
