@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar', ['delete', 'id' => $model->codigo], [
                     'class' => 'btn btn-danger',
                     'data' => [
-                        'confirm' => 'Are you sure you want to delete this item?',
+                        'confirm' => '¿Esta seguro que desea eliminar esta entrada?',
                         'method' => 'post',
                     ],
                 ]) ?>
