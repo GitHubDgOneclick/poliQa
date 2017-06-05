@@ -73,7 +73,7 @@ class LoginForm extends Model
         if ( $usuarioLdap != null ) {
             echo "username:"+$this->username;
             echo "password:"+$this->password;
-            echo "*-----------------*"
+            echo "*-----------------*";
             print_r($usuarioLdap);
             if ( Yii::$app->ldap->authenticate( $this->username , $this->password ) ) {
                 
