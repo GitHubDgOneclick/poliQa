@@ -71,11 +71,11 @@ class LoginForm extends Model
     {
         $usuarioLdap = Yii::$app->ldap->search()->findBy( Yii::$app->params['codigo'] , $this->username );
         if ( $usuarioLdap != null ) {
-            echo "username:".$this->username;
-            echo "password:".$this->password;
-            echo "*-----------------*";
-            print_r($usuarioLdap);
-            
+            //echo "username:".$this->username;
+            //echo "password:".$this->password;
+            //echo "*-----------------*";
+            //print_r($usuarioLdap);
+
             if ( Yii::$app->ldap->connect( 'cn='.$this->username.',dc=poli,dc=edu,dc=co' , $this->password ) ) {
                 
                 $usuario = Usuario::findByUsername($this->username);
