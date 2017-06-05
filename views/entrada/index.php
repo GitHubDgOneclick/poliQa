@@ -22,7 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </h1>
     </div>
     <div class="row text-center">
-        <div class="col-xs-6 ">
+        <br />
+        <div class="col-xs-4 ">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="page-header">
