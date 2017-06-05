@@ -71,7 +71,7 @@ class LoginForm extends Model
     {
         $usuarioLdap = Yii::$app->ldap->search()->findBy( Yii::$app->params['codigo'] , $this->username );
         if ( $usuarioLdap != null ) {
-            if ( Yii::$app->ldap->getDefaultProvider()->auth()->attempt( $this->username , $this->password ) ) {
+            if ( Yii::$app->ldap->authenticate( $this->username , $this->password ) ) {
                 
                 $usuario = Usuario::findByUsername($this->username);
                 if ($usuario == null) {
