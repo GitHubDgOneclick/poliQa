@@ -12,6 +12,7 @@ $this->title = 'inicio';
 <div class="row bg-op padding-15">
     <div class="row text-center">
         <div class="col-xs-4">
+            <br />
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="page-header" style="margin: 0px 0 0px;">
