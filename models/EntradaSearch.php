@@ -51,6 +51,9 @@ class EntradaSearch extends Entrada
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pagesize' => 30,
+            ],
         ]);
 
         $this->load($params);
