@@ -30,29 +30,31 @@ $this->title = 'inicio';
         ]) ?>
     </div>
 </div>
-<script type="text/javascript">
-$(document).ready(function(){
-    igualarAltoItems($(".panel.panel-default"));
-});
+<?php
+$script = <<< JS
+    $(document).ready(function(){
+        igualarAltoItems($(".panel.panel-default"));
+    });
 
-function igualarAltoItems(objeto){
-    var maxHeight = 150;
-    //CICLO IMG
-    // objeto.each(function(i){
-    //  var obj = $(this);
-    //  if(obj.height()>maxHeight){
-    //      maxHeight = obj.height();
-    //  }
-    // });
-    for (var i = objeto.length - 1; i >= 0; i--) {
-        var obj = $(objeto[i]);
-        if(obj.height()>maxHeight){
-            maxHeight = obj.height();
-        }
-    };
-    maxHeight = maxHeight+1;
-    //ASIGNAR HEIGHT A LOS DEMÁS ELEMENTOS
-    objeto.css("height",maxHeight);
-}
-
-</script>
+    function igualarAltoItems(objeto){
+        var maxHeight = 150;
+        //CICLO IMG
+        // objeto.each(function(i){
+        //  var obj = $(this);
+        //  if(obj.height()>maxHeight){
+        //      maxHeight = obj.height();
+        //  }
+        // });
+        for (var i = objeto.length - 1; i >= 0; i--) {
+            var obj = $(objeto[i]);
+            if(obj.height()>maxHeight){
+                maxHeight = obj.height();
+            }
+        };
+        maxHeight = maxHeight+1;
+        //ASIGNAR HEIGHT A LOS DEMÁS ELEMENTOS
+        objeto.css("height",maxHeight);
+    }
+JS;
+$this->registerJs($script);
+?>
