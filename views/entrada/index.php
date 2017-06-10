@@ -35,8 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
                 </div>
             </div>
-            <br />
-            <br />
         </div>
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
