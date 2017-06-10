@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-sm-4 col-sm-offset-8 bg-op padding-15">
         <div class="page-header">
-            <h1>Bienvenido a Poli QaQa<small></small></h1>
+            <h1>Bienvenido a Poli Qa<small></small></h1>
         </div>
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
