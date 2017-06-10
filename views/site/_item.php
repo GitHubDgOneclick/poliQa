@@ -5,7 +5,7 @@ use app\models\Rol;
 use app\models\Aprobaciones;
 
 ?>
-<div class="col-xs-6">
+<div class="col-xs-4">
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="page-header">
