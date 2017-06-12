@@ -101,6 +101,7 @@ class EntradaController extends Controller
     public function actionIndex()
     {
         $searchModel = new EntradaSearch();
+        $searchModel->tipo = Entrada::TIPO_PREGUNTA;
         #$searchModel->fecha_inicial = AppDate::date();
         #$searchModel->fecha_final = AppDate::date();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
