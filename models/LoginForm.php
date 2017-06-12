@@ -70,7 +70,7 @@ class LoginForm extends Model
      */
     public function login()
     {
-        try {
+        #try {
             $usuarioLdap = Yii::$app->ldap->search()->findBy( Yii::$app->params['codigo'] , $this->username );
             if ( $usuarioLdap != null ) {
                 //echo "username:".$this->username;
@@ -105,10 +105,10 @@ class LoginForm extends Model
                 AppHandlingErrors::setFlash( 'danger' , 'El usuario no existe' );
                 return false;
             }
-        } catch ( AdldapException $e) {
-            AppHandlingErrors::setFlash( 'danger' , 'usuario o contraseña invalidos.' );
-            return false;
-        }
+        #} catch ( AdldapException $e) {
+            #AppHandlingErrors::setFlash( 'danger' , 'usuario o contraseña invalidos.' );
+            #return false;
+        #}
     }
 
     /**
