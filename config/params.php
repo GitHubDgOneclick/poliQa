@@ -6,5 +6,4 @@ return [
     'apellido' => 'sn',
     'email' => 'mail',
     'codigo' => 'uid',
-
 ];
