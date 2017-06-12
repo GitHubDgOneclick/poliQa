@@ -192,6 +192,7 @@ class EntradaController extends Controller
     public function actionComment()
     {
         $model = new Entrada();
+        $model->tipo = Entrada::TIPO_COMENTARIO;
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             AppHandlingErrors::setFlash( 'success' ,  'Gracias por comentar' );
             return $this->redirect( [ 'view', 'id' => $model->entrada ] );
