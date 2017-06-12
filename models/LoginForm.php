@@ -106,7 +106,7 @@ class LoginForm extends Model
                 return false;
             }
         } catch ( AdldapException $e) {
-            AppHandlingErrors::setFlash( 'danger' , 'usuario o contraseña invalidos' );
+            AppHandlingErrors::setFlash( 'danger' , 'usuario o contraseña invalidos.' );
             return false;
         }
     }
