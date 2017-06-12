@@ -5,8 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\models\UsersSearch;
-use app\assets\AppHandlingErrors;
-use Adldap\Exceptions\AdldapException;
 
 /**
  * LoginForm is the model behind the login form.
@@ -70,43 +68,9 @@ class LoginForm extends Model
      */
     public function login()
     {
-        try {
-            $usuarioLdap = Yii::$app->ldap->search()->findBy( Yii::$app->params['codigo'] , $this->username );
-            if ( $usuarioLdap != null ) {
-                //echo "username:".$this->username;
-                //echo "password:".$this->password;
-                //echo "*-----------------*";
-                //print_r($usuarioLdap);
-
-                if ( Yii::$app->ldap->connect( 'cn='.$this->username.',dc=poli,dc=edu,dc=co' , $this->password ) ) {
-                    
-                    $usuario = Usuario::findByUsername($this->username);
-                    if ($usuario == null) {
-                        $usuario = new Usuario; 
-                        $usuario->rol = Rol::ROL_USUARIO;
-                    }
-                    $usuario->nombre = $usuarioLdap[ Yii::$app->params['nombre'] ][0];
-                    $usuario->apellido = $usuarioLdap[ Yii::$app->params['apellido'] ][0];
-                    $usuario->email = $usuarioLdap[ Yii::$app->params['email'] ][0];
-                    $usuario->usuario = $this->username;
-                    $usuario->contrasena = $this->password;
-                    if ( $usuario->save() ) {
-                        
-                    } else {
-                        AppHandlingErrors::setFlash( 'danger' , 'Error guardando los datos del usuario' );
-                    }
-                    $this->_user = $usuario;
-                    return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
-                } else {
-                    AppHandlingErrors::setFlash( 'danger' , 'Contraseña no valida' );
-                    return false;
-                }
-            } else {
-                AppHandlingErrors::setFlash( 'danger' , 'El usuario no existe' );
-                return false;
-            }
-        } catch ( AdldapException $e) {
-            AppHandlingErrors::setFlash( 'danger' , 'usuario o contraseña invalidos' );
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        } else {
             return false;
         }
     }
